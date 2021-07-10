@@ -1,3 +1,4 @@
+const colors = require('tailwindcss/colors')
 export default {
   // Global page headers: https://go.nuxtjs.dev/config-head
   head: {
@@ -23,6 +24,10 @@ export default {
   // Auto import components: https://go.nuxtjs.dev/config-components
   components: true,
 
+  router: {
+    middleware: ['checkProfile',]
+  },
+
   // Modules for dev and build (recommended): https://go.nuxtjs.dev/config-modules
   buildModules: [
     // https://go.nuxtjs.dev/tailwindcss
@@ -47,9 +52,31 @@ export default {
     '@nuxtjs/sitemap'
   ],
 
+  tailwindcss: {
+    config: {
+      theme: {
+        extend: {
+          colors: {
+            elementary: colors.green,
+            beginner: colors.lime,
+            intermediate: colors.yellow,
+            advanced: colors.orange,
+            master: colors.red
+          },
+        }
+      },
+      variants: {
+        extend: {
+          padding: ['hover'],
+          // border: ['hover'],
+        }
+      },
+    }
+  },
+
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
   axios: {
-    baseURL: "http://localhost:8000",
+    baseURL: "http://localhost:8000/api",
   },
 
   auth: {
