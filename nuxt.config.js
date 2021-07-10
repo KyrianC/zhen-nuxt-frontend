@@ -65,9 +65,9 @@ export default {
           // autoFetch: true
         },
         endpoints: {
-          login: { url: '/api/auth/login/', method: 'post' },
-          logout: { url: '/api/auth/logout/', method: 'post' },
-          user: { url: '/api/auth/user/', method: 'get' }
+          login: { url: '/auth/login/', method: 'post' },
+          logout: { url: '/auth/logout/', method: 'post' },
+          user: { url: '/auth/user/', method: 'get' }
         }
       }
     }
