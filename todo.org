@@ -1,0 +1,37 @@
+#+TITLE: Todo
+
+* Minimal Product [1/5]
++ [ ] make it SPA is maybe better
+  + [ ] Then do skeleton loading or other animated thing
++ [X] Nav bar
++ [-] Users
+  + [X] Registration
+  + [X] Login
+  + [-] User profile page
+    + [X] Api endpoint for users written texts
+    + [ ] Ability to change users informations
+    + [ ] Frontend part
++ [-] Posts
+  + [X] View
+  + [ ] List
+    + [ ] Filter posts
+    + [ ] Pagination (by page or infinite scroll?)
+  + [X] Create
+  + [X] Delete
+  + [ ] Correct
++ [ ] Notifications
+
+* Design
+
+* Tests
++ [ ] frontend Tests (with jest and maybe add other)
++ [ ] Backend Unit tests
+
+* Deployment
++ [ ] emails
+
+* Additional features
++ [ ] Translation of words on hover
++ [ ] tranlations of posts (not automatic, made by user)
++ [ ] Search functionality (with elastic search maybe if can be dynamic)
++ [ ] add images/avatars for users, maybe images for posts thumbnail allowed too, not sure about that
