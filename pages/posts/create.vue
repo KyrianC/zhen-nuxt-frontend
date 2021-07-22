@@ -1,43 +1,50 @@
 <template>
-  <div>
+  <div class="flex flex-col items-center">
     <h1>Create Post</h1>
-    <form @submit.prevemt="postCreate" method="POST">
-      <label>
-        Language:
-        <select v-model="post.language" name="language">
-          <option value="en">English</option>
-          <option value="zh">Chinese</option>
-        </select>
-      </label>
-      <label>
-        Difficulty:
-        <select v-model="post.difficulty" name="difficulty">
-          <option value="elementary">Elementary</option>
-          <option value="beginner">Beginner</option>
-          <option value="intermediate">Intermediate</option>
-          <option value="advanced">Advanced</option>
-          <option value="master">Master</option>
-        </select>
-      </label>
-      <label for="title">
-        Title:
-        <input v-model="post.text.title" type="text" name="title" value="" />
-      </label>
-      <label for="content">
-        Text:
-        <textarea
-          v-model="post.text.original_content"
-          name="content"
-          id="content"
-        ></textarea>
-      </label>
+    <form
+      @submit.prevemt="postCreate"
+      method="POST"
+      class="flex flex-col items-left"
+    >
+      <formInput
+        type="select"
+        label="Difficulty"
+        v-model="post.difficulty"
+        name="difficulty"
+        :options="difficulties"
+      />
+      <formInput
+        type="select"
+        label="Language"
+        v-model="post.language"
+        name="language"
+        :options="languages"
+      />
+      <formInput
+        label="Title"
+        v-model="post.text.title"
+        type="text"
+        name="title"
+        value=""
+      />
+      <formInput
+        label="Content"
+        type="textarea"
+        v-model="post.text.original_content"
+        name="content"
+        id="content"
+      />
       <button>submit</button>
     </form>
   </div>
 </template>
 
 <script>
+import formInput from "~/components/form/formInput.vue";
 export default {
+  component: {
+    formInput
+  },
   data() {
     return {
       post: {
@@ -47,7 +54,39 @@ export default {
           title: "",
           original_content: ""
         }
-      }
+      },
+      languages: [
+        {
+          value: "en",
+          display: "English"
+        },
+        {
+          value: "zh",
+          display: "Chinese"
+        }
+      ],
+      difficulties: [
+        {
+          value: "elementary",
+          display: "Elementary"
+        },
+        {
+          value: "beginner",
+          display: "Beginner"
+        },
+        {
+          value: "intermediate",
+          display: "Intermediate"
+        },
+        {
+          value: "advanced",
+          display: "Advanced"
+        },
+        {
+          value: "master",
+          display: "Master"
+        }
+      ]
     };
   },
   methods: {

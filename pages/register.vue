@@ -1,29 +1,23 @@
 <template>
   <form @submit.prevent="userRegister">
-    <div>
-      <label>Username</label>
-      <input type="text" v-model="register.username" />
-    </div>
-    <div>
-      <label>email</label>
-      <input type="email" v-model="register.email" />
-    </div>
-    <div>
-      <label>Password</label>
-      <input type="password" v-model="register.password1" />
-    </div>
-    <div>
-      <label>Confirm Password</label>
-      <input type="password" v-model="register.password2" />
-    </div>
-    <div>
-      <button type="submit">Submit</button>
-    </div>
+    <formInput label="Username" type="text" v-model="register.username" />
+    <formInput label="Email" type="email" v-model="register.email" />
+    <formInput label="Password" type="password" v-model="register.password1" />
+    <formInput
+      label="Confirm Password"
+      type="password"
+      v-model="register.password2"
+    />
+    <button type="submit">Submit</button>
   </form>
 </template>
 
 <script>
+import formInput from "~/components/form/formInput.vue";
 export default {
+  component: {
+    formInput
+  },
   middleware: "auth",
   auth: "guest",
   data() {

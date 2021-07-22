@@ -2,24 +2,20 @@
   <div>
     <div v-if="$auth.loggedIn">{{ $auth.user.username }}</div>
     <form @submit.prevent="userLogin">
-      <div>
-        <label>Username</label>
-        <input type="text" v-model="login.username" />
-      </div>
-      <div>
-        <label>Password</label>
-        <input type="text" v-model="login.password" />
-      </div>
-      <div>
-        <button type="submit">Submit</button>
-      </div>
+      <formInput label="Username" type="text" v-model="login.username" />
+      <formInput label="Password" type="password" v-model="login.password" />
+      <button type="submit">Submit</button>
     </form>
     <button v-if="$auth.loggedIn" @click="userLogout">logout</button>
   </div>
 </template>
 
 <script>
+import formInput from "~/components/form/formInput.vue";
 export default {
+  component: {
+    formInput
+  },
   data() {
     return {
       login: {
