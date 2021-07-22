@@ -1,55 +1,51 @@
-const colors = require('tailwindcss/colors')
+const colors = require("tailwindcss/colors");
 export default {
   // Global page headers: https://go.nuxtjs.dev/config-head
   head: {
-    title: 'frontend',
+    title: "frontend",
     meta: [
-      { charset: 'utf-8' },
-      { name: 'viewport', content: 'width=device-width, initial-scale=1' },
-      { hid: 'description', name: 'description', content: '' }
+      { charset: "utf-8" },
+      { name: "viewport", content: "width=device-width, initial-scale=1" },
+      { hid: "description", name: "description", content: "" }
     ],
-    link: [
-      { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }
-    ]
+    link: [{ rel: "icon", type: "image/x-icon", href: "/favicon.ico" }]
   },
 
   // Global CSS: https://go.nuxtjs.dev/config-css
-  css: [
-  ],
+  css: [],
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
-  plugins: [
-  ],
+  plugins: [],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
   components: true,
 
   router: {
-    middleware: ['checkProfile',]
+    middleware: ["checkProfile"]
   },
 
   // Modules for dev and build (recommended): https://go.nuxtjs.dev/config-modules
   buildModules: [
     // https://go.nuxtjs.dev/tailwindcss
-    '@nuxtjs/tailwindcss',
+    "@nuxtjs/tailwindcss",
     // https://color-mode.nuxtjs.org/
-    '@nuxtjs/color-mode',
+    "@nuxtjs/color-mode"
   ],
 
   // Modules: https://go.nuxtjs.dev/config-modules
   modules: [
     // https://go.nuxtjs.dev/axios
-    '@nuxtjs/axios',
+    "@nuxtjs/axios",
     // https://go.nuxtjs.dev/pwa
-    '@nuxtjs/pwa',
+    "@nuxtjs/pwa",
     // https://auth.nuxtjs.org/
-    '@nuxtjs/auth-next',
+    "@nuxtjs/auth-next",
     // https://github.com/nuxt-community/community-modules/tree/master/packages/toast
-    '@nuxtjs/toast',
+    "@nuxtjs/toast",
     // https://i18n.nuxtjs.org/
-    'nuxt-i18n',
+    "nuxt-i18n",
     // https://sitemap.nuxtjs.org/
-    '@nuxtjs/sitemap'
+    "@nuxtjs/sitemap"
   ],
 
   tailwindcss: {
@@ -57,44 +53,47 @@ export default {
       theme: {
         extend: {
           colors: {
+            primary: "#111F2D",
+            secondary: "#BAD7F2",
+            secondaryBackground: "#05121E",
             elementary: colors.green,
             beginner: colors.lime,
             intermediate: colors.yellow,
             advanced: colors.orange,
             master: colors.red
-          },
+          }
         }
       },
       variants: {
         extend: {
-          padding: ['hover'],
+          padding: ["hover"]
           // border: ['hover'],
         }
-      },
+      }
     }
   },
 
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
   axios: {
-    baseURL: "http://localhost:8000/api",
+    baseURL: "http://localhost:8000/api"
   },
 
   auth: {
     strategies: {
       local: {
         token: {
-          property: 'key',
-          // required: true,
-          type: 'Token'
+          property: "key",
+          required: true,
+          type: "Token"
         },
         user: {
           property: false,
-          // autoFetch: true
+          autoFetch: true
         },
         endpoints: {
-          login: { url: '/auth/login/', method: 'post' },
-          logout: { url: '/auth/logout/', method: 'post' },
-          user: { url: '/auth/user/', method: 'get' }
+          login: { url: "/auth/login/", method: "post" },
+          logout: { url: "/auth/logout/", method: "post" },
+          user: { url: "/auth/user/", method: "get" }
         }
       }
     }
@@ -102,11 +101,10 @@ export default {
   // PWA module configuration: https://go.nuxtjs.dev/pwa
   pwa: {
     manifest: {
-      lang: 'en'
+      lang: "en"
     }
   },
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
-  build: {
-  }
-}
+  build: {}
+};

@@ -1,13 +1,19 @@
 <template>
-  <div class="w-2/5 border-2 border-black rounded m-2 p-2">
+  <div
+    id="post-card"
+    :class="`border-${post.difficulty}-400`"
+    class="w-full md:w-2/5 mx-6 my-3 md:m-3 p-4 bg-secondaryBackground border-r-4"
+  >
     <h2 class="text-xl font-bold">{{ post.text.title }}</h2>
     <p v-if="post.language == 'en'">🇬🇧</p>
     <p v-else-if="post.language == 'zh'">🇨🇳</p>
-    <p :class="`text-${post.difficulty}-400`">{{ post.difficulty }}</p>
-    <p>{{ post.text.original_content }}</p>
+    <p :class="`text-${post.difficulty}-400`">
+      {{ post.difficulty }}
+    </p>
+    <p>{{ post.description }}</p>
     <nuxt-link
       :to="`${$route.fullPath}/${post.slug}`"
-      class="inline-block text-lg my-2 px-1 border-gray-400 border-b-2 rounded hover:border-2 hover:border-black hover:bg-black hover:text-white transition-all"
+      class="inline-block text-lg my-2 px-1 border-primary border-b-2 hover:border-2 hover:border-primary hover:bg-primary hover:text-gray-300 transition-all"
       >See post</nuxt-link
     >
   </div>
@@ -20,5 +26,3 @@ export default {
   }
 };
 </script>
-
-<style></style>

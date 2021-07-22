@@ -1,5 +1,5 @@
 <template>
-  <div class="flex flex-wrap">
+  <div class="text-gray-300 flex flex-wrap justify-center">
     <PostCard v-for="post in posts" :post="post" :key="post.id" />
   </div>
 </template>
@@ -8,15 +8,17 @@
 import PostCard from "@/components/PostCard.vue";
 export default {
   ssr: false,
+  components: {
+    PostCard
+  },
   data() {
     return {
-      posts: [],
-      originalPosts: []
+      posts: []
     };
   },
   async asyncData({ route, $axios }) {
     const posts = await $axios.$get(`${route.fullPath}/`);
-    console.log(route.path, route.fullPath);
+    console.log(posts);
     return { posts };
   }
 };
