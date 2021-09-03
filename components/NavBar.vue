@@ -1,9 +1,9 @@
 <template>
   <ul
-    class="nav transition-all duration-300 text-black flex md:flex-col justify-center items-center md:items-start w-screen h-14 md:h-screen md:w-14 px-4 fixed bottom-0 bg-secondary overflow-hidden"
+    class="z-50 nav transition-all duration-300 text-black flex md:flex-col justify-evenly md:justify-center items-center md:items-start w-screen h-12 md:h-screen px-3 fixed bottom-0 bg-secondary overflow-hidden"
     @mouseenter="expanded = true"
     @mouseleave="expanded = false"
-    :class="expanded && 'md:w-32'"
+    :class="expanded ? 'md:w-32' : 'md:w-14'"
   >
     <NavItem :expanded="expanded" name="Home" link="/" icon="/home-black.svg" />
     <NavItem
@@ -17,11 +17,12 @@
       link="/posts/create"
       icon="/add-black.svg"
       :expanded="expanded"
+      :middle="true"
     />
     <NavItem
       :expanded="expanded"
       name="Profile"
-      link="/login"
+      link="/user"
       icon="/user-black.svg"
     />
     <NavItem :expanded="expanded" name="More" link="#" icon="/more-black.svg" />
@@ -38,13 +39,6 @@ export default {
     return {
       expanded: false
     };
-  },
-  methods: {
-    async logout() {
-      await this.$auth.logout();
-      // redirect if not already at index page
-      this.$route.path !== "/" && this.$router.replace("");
-    }
   }
 };
 </script>
