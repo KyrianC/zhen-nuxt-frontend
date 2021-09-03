@@ -1,28 +1,29 @@
 <template>
   <form method="POST" @submit.prevent="completeUserProfile">
-    <label>
-      Language you are currently learning:
-      <select v-model="userDetail.learning_language" name="language">
-        <option value="en">English</option>
-        <option value="zh">Chinese</option>
-      </select>
-    </label>
-    <label>
-      Your level of proficiency at this language:
-      <select v-model="userDetail.level" name="difficulty">
-        <option value="elementary">Elementary</option>
-        <option value="beginner">Beginner</option>
-        <option value="intermediate">Intermediate</option>
-        <option value="advanced">Advanced</option>
-        <option value="master">Master</option>
-      </select>
-    </label>
+    <formInput
+      type="select"
+      v-model="userDetail.learning_language"
+      label="Language to learn"
+      name="language"
+      :options="languages"
+    />
+    <formInput
+      type="select"
+      v-model="userDetail.level"
+      name="difficulty"
+      label="Your level of proficiency in the language above"
+      :options="difficulties"
+    />
     <button type="submit">submit</button>
   </form>
 </template>
 
 <script>
+import formInput from "~/components/form/formInput.vue";
 export default {
+  component: {
+    formInput
+  },
   middleware: "auth",
   data() {
     return {
@@ -31,7 +32,39 @@ export default {
         email: this.$auth.user.email,
         learning_language: "",
         level: ""
-      }
+      },
+      languages: [
+        {
+          value: "en",
+          display: "English"
+        },
+        {
+          value: "zh",
+          display: "Chinese"
+        }
+      ],
+      difficulties: [
+        {
+          value: "elementary",
+          display: "Elementary"
+        },
+        {
+          value: "beginner",
+          display: "Beginner"
+        },
+        {
+          value: "intermediate",
+          display: "Intermediate"
+        },
+        {
+          value: "advanced",
+          display: "Advanced"
+        },
+        {
+          value: "master",
+          display: "Master"
+        }
+      ]
     };
   },
   methods: {
@@ -51,7 +84,7 @@ export default {
       this.$auth.user.level != "unset" &&
       this.$auth.learning_language != "unset"
     ) {
-      this.$router.push({ name: "index" });
+      this.$router.push({ name: "user" });
     }
   }
 };

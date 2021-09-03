@@ -2,7 +2,7 @@
   <div class="flex flex-col items-center">
     <h1>Create Post</h1>
     <form
-      @submit.prevemt="postCreate"
+      @submit.prevent="postCreate"
       method="POST"
       class="flex flex-col items-left"
     >
@@ -12,19 +12,28 @@
         v-model="post.difficulty"
         name="difficulty"
         :options="difficulties"
+        :selected="post.difficulty"
       />
-      <formInput
-        type="select"
-        label="Language"
-        v-model="post.language"
-        name="language"
-        :options="languages"
-      />
+      <!-- <formInput
+           type="select"
+           label="Language"
+           v-model="post.language"
+           name="language"
+           :options="languages"
+           :disabled="true"
+           /> -->
       <formInput
         label="Title"
         v-model="post.text.title"
         type="text"
         name="title"
+        value=""
+      />
+      <formInput
+        label="Description"
+        v-model="post.description"
+        type="text"
+        name="description"
         value=""
       />
       <formInput
@@ -45,11 +54,13 @@ export default {
   component: {
     formInput
   },
+  middleware: "auth",
   data() {
     return {
       post: {
-        language: "",
-        difficulty: "",
+        description: "",
+        language: this.$auth.user.learning_language,
+        difficulty: this.$auth.user.level,
         text: {
           title: "",
           original_content: ""
@@ -93,10 +104,10 @@ export default {
     async postCreate() {
       console.log(this.$route);
       try {
-        let response = await this.$axios.$post(this.$route.fullPath, {
+        let response = await this.$axios.$post(this.$route.fullPath + "/", {
           ...this.post
         });
-        this.$router.push({ name: "posts-index" });
+        this.$router.push("/posts");
         console.log(response);
       } catch (err) {
         console.log(err);

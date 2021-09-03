@@ -6,6 +6,9 @@
       <formInput label="Password" type="password" v-model="login.password" />
       <button type="submit">Submit</button>
     </form>
+    <small
+      >No account yet? <NuxtLink to="/register">Register Now</NuxtLink></small
+    >
     <button v-if="$auth.loggedIn" @click="userLogout">logout</button>
   </div>
 </template>
@@ -35,8 +38,8 @@ export default {
           this.$auth.learning_language == "unset"
         ) {
           this.$router.push({ name: "complete-profile" });
-        } else {
-          this.$router.push({ name: "index" });
+          // } else {
+          //   this.$router.push({ name: "index" });
         }
         console.log(response);
       } catch (err) {

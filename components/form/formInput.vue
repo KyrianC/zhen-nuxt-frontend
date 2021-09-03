@@ -1,16 +1,20 @@
 <template>
   <div>
-    <label v-if="label" for="name" class="block mb-1">{{ label }}:</label>
+    <label v-if="label" for="name" class="block pb-1 pt-3">{{ label }}:</label>
 
     <textarea
       v-if="type === 'textarea'"
       :name="name"
-      rows="10"
+      rows="15"
       cols="60"
       tabindex=""
       :placeholder="placeholder"
       @input="handleInput($event.target.value)"
-      class="mb-4 text-black w-full h-2/3 text-xl p-4"
+      class="mb-4 text-black w-full h-full text-lg p-5"
+      :class="error && 'border-2 border-red-500'"
+      :required="required"
+      :disabled="disabled"
+      :value="defaultValue"
     ></textarea>
 
     <select
@@ -18,8 +22,12 @@
       v-else-if="type === 'select'"
       :name="name"
       @input="handleInput($event.target.value)"
+      :class="error && 'border-2 border-red-500'"
+      :required="required"
+      :disabled="disabled"
     >
       <option
+        :selected="selected == option.value"
         v-for="(option, index) in options"
         :key="index"
         :value="option.value"
@@ -28,13 +36,18 @@
     </select>
 
     <input
-      class="mb-4 text-black"
+      class="mb-1 p-1 text-black"
       v-else="type !== 'textarea'"
       :type="type"
       :name="name"
       :placeholder="placeholder"
       @input="handleInput($event.target.value)"
+      :class="error && 'border-2 border-red-500'"
+      :required="required"
+      :disabled="disabled"
+      :value="defaultValue"
     />
+    <p class="text-red-500" v-for="message in error">{{ message }}</p>
   </div>
 </template>
 
@@ -45,18 +58,16 @@ export default {
     name: String,
     label: String,
     placeholder: String,
-    options: Array
+    options: Array,
+    error: Array,
+    required: Boolean,
+    disabled: Boolean,
+    selected: String,
+    defaultValue: String
   },
   methods: {
     handleInput(input) {
       this.$emit("input", input);
-    }
-  },
-  created() {
-    if (this.options) {
-      this.options.forEach(option => {
-        console.log(option.value, option.display);
-      });
     }
   }
 };
