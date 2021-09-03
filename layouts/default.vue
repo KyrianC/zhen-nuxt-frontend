@@ -1,8 +1,8 @@
 <template>
-  <div class="bg-primary text-gray-300">
+  <div class="min-h-screen bg-primary text-gray-300">
     <NavBar />
-    <Nuxt class="md:ml-14 px-3" />
-    <!-- margin left when navbar become fixed on the right so content doesn't stay under navbar -->
+    <Nuxt class="mb-12 md:ml-14 md:mb-0" />
+    <!-- margin so content doesn't stay under navbar -->
   </div>
 </template>
 
