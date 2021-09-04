@@ -15,7 +15,7 @@
 + [-] Posts
   + [X] View
   + [-] List
-    + [ ] Filter & order posts
+    + [-] Filter & order posts
     + [X] Pagination (infinite scroll on frontend)
     + [ ] Full text search (Postgres search first maybe elastic searh to learn it one day)
   + [X] Create
