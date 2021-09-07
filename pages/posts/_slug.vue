@@ -33,9 +33,19 @@
 
 <script>
 export default {
-  data() {
+  transition(to, from) {
+    let name = "page";
+    let mode = "out-in";
+    if (from.name == "posts") {
+      name = "slide-left";
+      mode = "";
+    } else if (to.name === "posts") {
+      name = "slide-right";
+      mode = "";
+    }
     return {
-      deleteModal: false
+      name,
+      mode
     };
   },
   async asyncData({ route, $axios }) {
@@ -44,7 +54,6 @@ export default {
     return { post };
   },
   methods: {
-    deleteModal() {},
     async deletePost() {
       try {
         let response = await this.$axios.$delete(`${this.$route.fullPath}/`);
@@ -57,4 +66,51 @@ export default {
 };
 </script>
 
-<style></style>
+<style>
+/* BUG navbar's margin makes it bug */
+.slide-right-enter-active,
+.slide-right-leave-active,
+.slide-left-enter-active,
+.slide-left-leave-active {
+  transition: transform 0.4s ease-in-out, opacity 0.2s linear;
+  width: 100vw;
+  z-index: 0;
+  /* margin-left: 3.5rem; */
+  /* overflow: hidden; */
+}
+
+.slide-right-leave-active,
+.slide-left-leave-active {
+  position: absolute;
+}
+
+.slide-right-enter {
+  transform: translate(-100%, 0);
+}
+
+.slide-right-leave-to {
+  transform: translate(100%, 0);
+  opacity: 0;
+  z-index: 0;
+}
+
+.slide-right-enter-to {
+  position: absolute;
+  top: 0;
+}
+
+.slide-left-leave-to {
+  transform: translate(-100%, 0);
+  opacity: 0;
+  z-index: 0;
+}
+
+.slide-left-enter {
+  transform: translate(100%, 0);
+}
+
+/* HACK otherwise scrollbar appears */
+body {
+  overflow-x: hidden;
+}
+</style>
