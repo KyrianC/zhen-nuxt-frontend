@@ -37,7 +37,7 @@
 
     <input
       class="mb-1 p-1 text-black"
-      v-else="type !== 'textarea'"
+      v-else
       :type="type"
       :name="name"
       :placeholder="placeholder"
@@ -47,7 +47,9 @@
       :disabled="disabled"
       :value="defaultValue"
     />
-    <p class="text-red-500" v-for="message in error">{{ message }}</p>
+    <p class="text-red-500" v-for="message in error" :key="message">
+      {{ message }}
+    </p>
   </div>
 </template>
 

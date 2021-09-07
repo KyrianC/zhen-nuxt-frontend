@@ -1,7 +1,7 @@
 <template>
   <div class="min-h-screen bg-primary text-gray-300">
     <NavBar />
-    <Nuxt class="mb-12 md:mb-0" />
+    <Nuxt class="pb-12 md:mb-0 md:pl-14" />
     <!-- margin so content doesn't stay under navbar -->
   </div>
 </template>
