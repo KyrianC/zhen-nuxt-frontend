@@ -3,7 +3,7 @@
     :to="`${$route.fullPath}/${post.slug}`"
     id="post-card"
     :class="`border-${post.difficulty}-400`"
-    class="w-full md:w-2/5 mx-6 my-3 md:m-3 p-4 bg-secondaryBackground border-r-4 block"
+    class="w-full md:w-2/5 my-3 md:m-3 p-4 bg-secondaryBackground border-r-4 block"
   >
     <h2 class="text-xl font-bold">{{ post.text.title }}</h2>
     <p v-if="post.language == 'en'">🇬🇧</p>
