@@ -2,6 +2,11 @@
   <div
     class="px-3 bg-secondaryBackground flex flex-col items-center min-h-screen"
   >
+    <nuxt-link
+      to="/posts"
+      class="absolute left-2 md:left-20 top-2 md:top-4 text-lg"
+      >< back</nuxt-link
+    >
     <h1
       class="my-4 text-2xl font-bold text-center border-b-2 capitalize"
       :class="`border-${post.difficulty}-400`"
@@ -9,20 +14,36 @@
       {{ post.text.title }}
     </h1>
     <p class="italic">Written by {{ post.text.author.username }}</p>
-    <p class="text-justify mx-2 my-4 text-lg max-w-prose whitespace-pre-line">
+    <p
+      class="text-justify mx-2 my-4 text-lg text-gray-300 md:text-xl leading-8 max-w-prose whitespace-pre-line"
+    >
       {{ post.text.original_content }}
     </p>
     <button
-      v-if="$auth.loggedIn && $auth.user.pk == post.text.author.id"
-      @click.prevent="deleteModal = true"
+      class="border-2 p-2 border-red-400 text-red-400 mb-4 hover:bg-red-400 hover:text-white transition duration-500"
+      v-if="$auth.loggedIn && $auth.user.pk == post.text.author.pk"
+      @click.prevent="showDeleteModal = true"
     >
       Delete Post
     </button>
+    <Modal
+      v-show="showDeleteModal"
+      @close="showDeleteModal = false"
+      @confirm="deletePost"
+    >
+      <template v-slot:header
+        >Are you sure you want to Delete
+        <span class="capitalize italic">"{{ post.text.title }}"</span></template
+      >
+      <template v-slot:primary-btn>Delete</template>
+      <template v-slot:secondary-btn>Cancel</template>
+    </Modal>
     <NuxtLink
+      class="border-2 p-2 border-green-400 text-green-400 mb-4 hover:bg-green-400 hover:text-white transition duration-500"
       v-if="
         $auth.loggedIn
           ? $auth.user.language !== post.language &&
-            $auth.user.pk !== post.text.author.id
+            $auth.user.pk !== post.text.author.pk
           : true
       "
       :to="`/posts/correct/${post.slug}`"
@@ -32,7 +53,11 @@
 </template>
 
 <script>
+import Modal from "~/components/Modal";
 export default {
+  components: {
+    Modal
+  },
   transition(to, from) {
     let name = "page";
     let mode = "out-in";
@@ -48,6 +73,11 @@ export default {
       mode
     };
   },
+  data() {
+    return {
+      showDeleteModal: false
+    };
+  },
   async asyncData({ route, $axios }) {
     const post = await $axios.$get(`${route.fullPath}/`);
     console.log(post);
@@ -56,8 +86,8 @@ export default {
   methods: {
     async deletePost() {
       try {
-        let response = await this.$axios.$delete(`${this.$route.fullPath}/`);
-        // Redirect here
+        await this.$axios.$delete(`${this.$route.fullPath}/`);
+        this.$router.push({ name: "posts" });
       } catch (err) {
         console.log(err);
       }
@@ -89,7 +119,7 @@ export default {
 }
 
 .slide-right-leave-to {
-  transform: translate(100%, 0);
+  transform: translate(30%, 0);
   opacity: 0;
   z-index: 0;
 }
@@ -100,7 +130,7 @@ export default {
 }
 
 .slide-left-leave-to {
-  transform: translate(-100%, 0);
+  transform: translate(-30%, 0);
   opacity: 0;
   z-index: 0;
 }

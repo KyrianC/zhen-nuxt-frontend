@@ -23,16 +23,38 @@
         v-model="correction.original_content"
         :defaultValue="post.text.original_content"
       />
-      <button @click.prevent="postCorrect">submit</button>
+      <button @click.prevent="diff">submit</button>
     </form>
+    <transition name="fade">
+      <Modal v-show="diffResult.length" @close="diffResult = []">
+        <template v-slot:header>Your Correction</template>
+        <template v-slot:body>
+          <span
+            v-for="(word, index) in diffResult"
+            :key="`${word[0]}-${index}`"
+            :class="
+              word[0] == 1
+                ? 'text-green-400 underline'
+                : word[0] == -1 && 'text-red-400 line-through'
+            "
+            >{{ word[1] }}</span
+          >
+        </template>
+        <template v-slot:primary-btn>Submit Correction</template>
+        <template v-slot:secondary-btn>Cancel</template>
+      </Modal>
+    </transition>
   </div>
 </template>
 
 <script>
+import Modal from "~/components/Modal";
 import formInput from "~/components/form/formInput";
+import diffMatchPatch from "diff-match-patch";
 export default {
   component: {
-    FormInput: formInput
+    FormInput: formInput,
+    Modal
   },
   middleware: "auth",
   async asyncData({ params, $axios }) {
@@ -44,10 +66,20 @@ export default {
       correction: {
         title: "",
         original_content: ""
-      }
+      },
+      diffResult: []
     };
   },
   methods: {
+    diff() {
+      var dmp = new diffMatchPatch();
+      var diff = dmp.diff_main(
+        this.post.text.original_content,
+        this.correction.original_content
+      );
+      dmp.diff_cleanupSemantic(diff);
+      this.diffResult = diff;
+    },
     async postCorrect() {
       try {
         const res = await this.$axios.$post(
@@ -63,7 +95,6 @@ export default {
     }
   },
   created() {
-    console.log(this.post);
     if (this.$auth.user.pk == this.post.text.author.pk) {
       this.$router.push({ name: "posts" });
     }
@@ -71,4 +102,13 @@ export default {
 };
 </script>
 
-<style></style>
+<style scoped>
+.fade-enter-active,
+.fade-leave-active {
+  transition: all 0.3s;
+}
+.fade-enter,
+.fade-leave-to {
+  opacity: 0;
+}
+</style>

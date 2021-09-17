@@ -54,6 +54,9 @@ export default {
   tailwindcss: {
     config: {
       theme: {
+        maxHeight: {
+          '3/4': '75%',
+        },
         extend: {
           colors: {
             primary: "#111F2D",
