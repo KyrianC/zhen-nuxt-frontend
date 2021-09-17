@@ -93,10 +93,15 @@ export default {
   auth: {
     strategies: {
       local: {
+        scheme: "refresh",
         token: {
-          property: "key",
+          property: "access",
           required: true,
-          type: "Token"
+        },
+        refreshToken: {
+          property: 'refresh',
+          data: 'refresh',
+          maxAge: 60 * 60 * 24 * 30
         },
         user: {
           property: false,
@@ -105,6 +110,7 @@ export default {
         endpoints: {
           login: { url: "/auth/login/", method: "post" },
           logout: { url: "/auth/logout/", method: "post" },
+          refresh: { url: '/auth/token/refresh/', method: 'post' },
           user: { url: "/auth/user/", method: "get" }
         }
       }
