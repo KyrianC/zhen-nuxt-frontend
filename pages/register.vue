@@ -24,7 +24,11 @@
       v-model="register.password2"
       :error="error.password2"
     />
-    <p class="text-red-500" :key="index" v-for="(message, index) in error.non_field_errors">
+    <p
+      class="text-red-500"
+      :key="index"
+      v-for="(message, index) in error.non_field_errors"
+    >
       {{ message }}
     </p>
     <button type="submit">Submit</button>
@@ -57,7 +61,6 @@ export default {
         this.response = await this.$axios.$post("/auth/registration/", {
           ...this.register
         });
-        console.log("RESPONSE", response);
         return this.response;
       } catch (err) {
         console.dir(err);

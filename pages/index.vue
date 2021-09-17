@@ -1,7 +1,7 @@
 <template>
   <div>
     <div
-      class="h-screen  py-4 flex justify-center items-center flex-col text-center text-opacity-100 bg-secondaryBackground"
+      class="h-screen py-4 flex justify-center items-center flex-col text-center text-opacity-100 bg-secondaryBackground"
     >
       <h1 class="font-bold text-5xl m-2">
         The Best Way to Learn is to

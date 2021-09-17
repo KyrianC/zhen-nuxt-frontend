@@ -18,7 +18,7 @@
         >See post</span
       >
       <NuxtLink
-        v-if="$auth.loggeIn && $auth.user.pk != post.text.author.id"
+        v-if="$auth.loggeIn && $auth.user.pk != post.text.author.pk"
         :to="`${$route.fullPath}/correct/${post.slug}`"
         class="inline-block text-lg my-2 px-1 border-primary border-b-2 hover:border-2 hover:border-primary hover:bg-primary hover:text-gray-300 transition-all"
         >Correct</NuxtLink
