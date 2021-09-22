@@ -42,8 +42,10 @@ export default {
           //   this.$router.push({ name: "index" });
         }
         console.log(response);
+        this.$toast.success("Successfully authenticated");
       } catch (err) {
         console.log(err);
+        this.$toast.error("Error while authenticating");
       }
     },
     async userLogout() {

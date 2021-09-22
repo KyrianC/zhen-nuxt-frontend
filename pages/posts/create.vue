@@ -108,8 +108,10 @@ export default {
           ...this.post
         });
         this.$router.push("/posts");
+        this.$toast.success(`Successfully created "${this.post.text.title}"`);
         console.log(response);
       } catch (err) {
+        this.$toast.error("An error occured, please try again");
         console.log(err);
       }
     }

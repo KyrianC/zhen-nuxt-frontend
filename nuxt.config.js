@@ -85,6 +85,12 @@ export default {
     height: '3px'
   },
 
+  // toast module
+  toast: {
+    position: 'top-center',
+    duration: 2000
+  },
+
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
   axios: {
     baseURL: "http://localhost:8000/api"

@@ -89,8 +89,12 @@ export default {
           }
         );
         console.log(res);
+        this.$toast.success(
+          `Your correction has been sent to ${post.text.author}`
+        );
       } catch (err) {
         console.log(err);
+        this.$toast.error("An error occured, please try again");
       }
     }
   },

@@ -74,8 +74,10 @@ export default {
           ...this.userDetail
         });
         this.$router.push({ name: "index" });
+          this.$toast.success("Your profile is now complete!");
       } catch (err) {
         console.log(err);
+        this.$toast.error("An error occured, please try again");
       }
     }
   },

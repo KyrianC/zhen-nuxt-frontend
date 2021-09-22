@@ -62,8 +62,10 @@ export default {
           ...this.register
         });
         return this.response;
+        this.$toast.show("Just one more step...");
       } catch (err) {
         console.dir(err);
+        this.$toast.error("An error occured, please try again");
         this.error = err.response.data;
         return this.error;
       }

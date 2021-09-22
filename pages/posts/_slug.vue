@@ -88,8 +88,10 @@ export default {
       try {
         await this.$axios.$delete(`${this.$route.fullPath}/`);
         this.$router.push({ name: "posts" });
+        this.$toast.success(`${post.text.title} has successfully been deleted`);
       } catch (err) {
         console.log(err);
+        this.$toast.error("An error occured, please try again");
       }
     }
   }
