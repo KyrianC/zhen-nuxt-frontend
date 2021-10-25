@@ -18,12 +18,11 @@
       <formInput
         type="text"
         label="Title"
-        v-model="post.text.title"
+        v-model="post.title"
         :required="true"
         name="title"
-        :error="error.text && error.text.title"
+        :error="error.title"
       />
-      <!-- ^^^ optional chaining not supported in Vue 2.x -->
       <formInput
         label="Description"
         name="description"
@@ -35,10 +34,10 @@
       <formInput
         label="Content"
         type="textarea"
-        v-model="post.text.original_content"
+        v-model="post.content"
         name="content"
         :required="true"
-        :error="error.text && error.text.original_content"
+        :error="error.content"
       />
       <button>submit</button>
     </form>
@@ -57,13 +56,12 @@ export default {
   data() {
     return {
       post: {
+        title: "",
+        slug: "",
         description: "",
+        content: "",
         language: this.$auth.user.learning_language,
         difficulty: this.$auth.user.level,
-        text: {
-          title: "",
-          original_content: "",
-        },
       },
       languages,
       difficulties,
@@ -78,7 +76,7 @@ export default {
           ...this.post,
         });
         this.$router.push("/posts");
-        this.$toast.success(`Successfully created "${this.post.text.title}"`);
+        this.$toast.success(`Successfully created "${this.post.title}"`);
         console.log(response);
       } catch (err) {
         this.error = err.response.data;

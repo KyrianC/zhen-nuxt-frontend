@@ -7,7 +7,7 @@
       <transition name="fade" mode="out-in">
         <h1
           class="text-5xl overflow-hidden mb-3"
-          :class="`text-${colors[index]}-400`"
+          :class="`text-difficulty${index + 1}-400`"
           :key="words[index]"
         >{{ words[index] }}</h1>
       </transition>
@@ -34,7 +34,6 @@ export default {
   data() {
     return {
       words: ["Practice", "Read", "Write", "Correct", "Translate"],
-      colors: ["elementary", "beginner", "intermediate", "advanced", "master"],
       index: 0,
     };
   },

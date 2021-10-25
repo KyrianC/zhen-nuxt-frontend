@@ -2,10 +2,10 @@
   <div class="px-3 bg-secondaryBackground flex flex-col items-center min-h-screen">
     <h1
       class="my-4 text-2xl font-bold text-center border-b-2 capitalize"
-      :class="`border-${post.difficulty}-400`"
+      :class="`border-difficulty${post.difficulty}-400`"
     >
       Correct
-      <span class="italic">"{{ post.text.title }}"</span>
+      <span class="italic">"{{ post.title }}"</span>
     </h1>
     <form class="flex-grow" method="POST">
       <FormInput
@@ -13,7 +13,7 @@
         name="title"
         type="text"
         v-model="correction.title"
-        :defaultValue="post.text.title"
+        :defaultValue="post.title"
         :error="error.title"
         :required="true"
       />
@@ -21,12 +21,13 @@
         label="Text"
         name="content"
         type="textarea"
-        v-model="correction.original_content"
-        :defaultValue="post.text.original_content"
-        :error="error.original_content"
+        v-model="correction.content"
+        :defaultValue="post.content"
+        :error="error.content"
         :required="true"
       />
       <button @click.prevent="diff">submit</button>
+      <button v-if="isCorrectionNotNeeded">No errors!</button>
     </form>
     <transition name="fade">
       <Modal v-show="diffResult.length" @close="diffResult = []" @confirm="postCorrect">
@@ -61,9 +62,7 @@ export default {
   middleware: "auth",
   async asyncData({ params, $axios }) {
     try {
-      const post = await $axios.$get(
-        `/posts/${encodeURIComponent(params.slug)}/`
-      );
+      const post = await $axios.$get(`/posts/${params.slug}/`);
       return { post };
     } catch (err) {
       console.log(err);
@@ -73,7 +72,8 @@ export default {
     return {
       correction: {
         title: "",
-        original_content: "",
+        content: "",
+        slug: "",
       },
       diffResult: [],
       error: "",
@@ -82,10 +82,7 @@ export default {
   methods: {
     diff() {
       var dmp = new diffMatchPatch();
-      var diff = dmp.diff_main(
-        this.post.text.original_content,
-        this.correction.original_content
-      );
+      var diff = dmp.diff_main(this.post.content, this.correction.content);
       dmp.diff_cleanupSemantic(diff);
       this.diffResult = diff;
     },
@@ -94,19 +91,19 @@ export default {
         const res = await this.$axios.$post(
           `/posts/correct/${this.post.slug}/`,
           {
-            /* HACK can't set title and original_content default values to post
-            values directly because of asyncdata, so if input is unchanged
-            it would send and empty string */
-            title: this.correction.title || this.post.text.title,
-            original_content:
-              this.correction.original_content ||
-              this.post.text.original_content,
+            /* HACK can't set post.title and post.content as default values to
+            this.correction directly because of asyncdata, if correction.title
+            or correction.content was unchanged it would send and empty string.
+            so use this method to send post values in that case */
+            title: this.correction.title || this.post.title,
+            content: this.correction.content || this.post.content,
+            slug: this.post.slug,
           }
         );
         console.log(res);
         this.$router.push({ name: "posts" });
         this.$toast.success(
-          `Your correction has been sent to ${this.post.text.author.username}`
+          `Your correction has been sent to ${this.post.author.username}`
         );
       } catch (err) {
         console.log(err);
@@ -115,8 +112,17 @@ export default {
       }
     },
   },
+  computed: {
+    isCorrectionNotNeeded() {
+      return (
+        (!this.correction.title || this.correction.title == this.post.title) &&
+        (!this.correction.content ||
+          this.correction.content == this.post.content)
+      );
+    },
+  },
   created() {
-    if (this.$auth.user.pk == this.post.text.author.pk) {
+    if (this.$auth.user.pk == this.post.author.pk) {
       this.$router.push({ name: "posts" });
     }
   },

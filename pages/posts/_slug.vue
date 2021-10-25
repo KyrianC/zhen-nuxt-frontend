@@ -2,21 +2,21 @@
   <div class="px-3 bg-secondaryBackground flex flex-col items-center min-h-screen">
     <h1
       class="my-4 text-2xl font-bold text-center border-b-2 capitalize"
-      :class="`border-${post.difficulty}-400`"
-    >{{ post.text.title }}</h1>
-    <p class="italic">Written by {{ post.text.author.username }}</p>
+      :class="`border-difficulty${post.difficulty}-400`"
+    >{{ post.title }}</h1>
+    <p class="italic">Written by {{ post.author.username }}</p>
     <p
       class="text-justify mx-2 my-4 text-lg text-gray-300 md:text-xl leading-8 max-w-prose whitespace-pre-line"
-    >{{ post.text.original_content }}</p>
+    >{{ post.content }}</p>
     <button
       class="border-2 p-2 border-red-400 text-red-400 mb-4 hover:bg-red-400 hover:text-white transition duration-500"
-      v-if="$auth.loggedIn && $auth.user.pk == post.text.author.pk"
+      v-if="$auth.loggedIn && $auth.user.pk == post.author.pk"
       @click.prevent="showDeleteModal = true"
     >Delete Post</button>
     <Modal v-show="showDeleteModal" @close="showDeleteModal = false" @confirm="deletePost">
       <template v-slot:header>
         Are you sure you want to Delete
-        <span class="capitalize italic">"{{ post.text.title }}"</span>
+        <span class="capitalize italic">"{{ post.title }}"</span>
       </template>
       <template v-slot:primary-btn>Delete</template>
       <template v-slot:secondary-btn>Cancel</template>
@@ -26,7 +26,7 @@
       v-if="
         $auth.loggedIn
           ? $auth.user.language !== post.language &&
-            $auth.user.pk !== post.text.author.pk
+            $auth.user.pk !== post.author.pk
           : true
       "
       :to="`/posts/correct/${post.slug}`"
@@ -70,7 +70,7 @@ export default {
       try {
         await this.$axios.$delete(`${this.$route.fullPath}/`);
         this.$router.push({ name: "posts" });
-        this.$toast.success(`${post.text.title} has successfully been deleted`);
+        this.$toast.success(`${post.title} has successfully been deleted`);
       } catch (err) {
         console.log(err);
         this.$toast.error("An error occured, please try again");
