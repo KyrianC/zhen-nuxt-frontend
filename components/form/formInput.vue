@@ -7,7 +7,7 @@
       :name="name"
       rows="15"
       cols="60"
-      tabindex=""
+      tabindex
       :placeholder="placeholder"
       @input="handleInput($event.target.value)"
       class="mb-4 text-black w-full h-full text-lg p-5"
@@ -27,12 +27,11 @@
       :disabled="disabled"
     >
       <option
-        :selected="selected == option.value"
-        v-for="(option, index) in options"
-        :key="index"
-        :value="option.value"
-        >{{ option.display }}</option
-      >
+        :selected="selected == key"
+        v-for="(value, key) in options"
+        :key="key"
+        :value="key"
+      >{{ value }}</option>
     </select>
 
     <input
@@ -47,9 +46,7 @@
       :disabled="disabled"
       :value="defaultValue"
     />
-    <p class="text-red-500" v-for="message in error" :key="message">
-      {{ message }}
-    </p>
+    <p class="text-red-500" v-for="message in error" :key="message">{{ message }}</p>
   </div>
 </template>
 
@@ -60,17 +57,17 @@ export default {
     name: String,
     label: String,
     placeholder: String,
-    options: Array,
+    options: Object,
     error: Array,
     required: Boolean,
     disabled: Boolean,
     selected: String,
-    defaultValue: String
+    defaultValue: String,
   },
   methods: {
     handleInput(input) {
       this.$emit("input", input);
-    }
-  }
+    },
+  },
 };
 </script>
