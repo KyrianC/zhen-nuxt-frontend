@@ -1,40 +1,23 @@
 <template>
-  <div
-    class="px-3 bg-secondaryBackground flex flex-col items-center min-h-screen"
-  >
-    <nuxt-link
-      to="/posts"
-      class="absolute left-2 md:left-20 top-2 md:top-4 text-lg"
-      >< back</nuxt-link
-    >
+  <div class="px-3 bg-secondaryBackground flex flex-col items-center min-h-screen">
     <h1
       class="my-4 text-2xl font-bold text-center border-b-2 capitalize"
       :class="`border-${post.difficulty}-400`"
-    >
-      {{ post.text.title }}
-    </h1>
+    >{{ post.text.title }}</h1>
     <p class="italic">Written by {{ post.text.author.username }}</p>
     <p
       class="text-justify mx-2 my-4 text-lg text-gray-300 md:text-xl leading-8 max-w-prose whitespace-pre-line"
-    >
-      {{ post.text.original_content }}
-    </p>
+    >{{ post.text.original_content }}</p>
     <button
       class="border-2 p-2 border-red-400 text-red-400 mb-4 hover:bg-red-400 hover:text-white transition duration-500"
       v-if="$auth.loggedIn && $auth.user.pk == post.text.author.pk"
       @click.prevent="showDeleteModal = true"
-    >
-      Delete Post
-    </button>
-    <Modal
-      v-show="showDeleteModal"
-      @close="showDeleteModal = false"
-      @confirm="deletePost"
-    >
-      <template v-slot:header
-        >Are you sure you want to Delete
-        <span class="capitalize italic">"{{ post.text.title }}"</span></template
-      >
+    >Delete Post</button>
+    <Modal v-show="showDeleteModal" @close="showDeleteModal = false" @confirm="deletePost">
+      <template v-slot:header>
+        Are you sure you want to Delete
+        <span class="capitalize italic">"{{ post.text.title }}"</span>
+      </template>
       <template v-slot:primary-btn>Delete</template>
       <template v-slot:secondary-btn>Cancel</template>
     </Modal>
@@ -47,8 +30,7 @@
           : true
       "
       :to="`/posts/correct/${post.slug}`"
-      >Correct Post</NuxtLink
-    >
+    >Correct Post</NuxtLink>
   </div>
 </template>
 
@@ -56,7 +38,7 @@
 import Modal from "~/components/Modal";
 export default {
   components: {
-    Modal
+    Modal,
   },
   transition(to, from) {
     let name = "page";
@@ -70,12 +52,12 @@ export default {
     }
     return {
       name,
-      mode
+      mode,
     };
   },
   data() {
     return {
-      showDeleteModal: false
+      showDeleteModal: false,
     };
   },
   async asyncData({ route, $axios }) {
@@ -93,8 +75,8 @@ export default {
         console.log(err);
         this.$toast.error("An error occured, please try again");
       }
-    }
-  }
+    },
+  },
 };
 </script>
 

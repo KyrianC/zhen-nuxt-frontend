@@ -1,29 +1,18 @@
 <template>
-  <div>
+  <div class="bg-primary min-h-screen">
     <!-- filter -->
     <div class="flex justify-center">
-      <div
-        class="w-full mx-6 md:mx-0 md:w-4/5 flex items-center"
-        key="filter-btn"
-      >
+      <div class="w-full mx-6 md:mx-0 md:w-4/5 flex items-center" key="filter-btn">
         <button>
-          <img
-            class="w-6 md:ml-3 mt-3"
-            src="/filter.svg"
-            @click="$store.commit('setShowFilters')"
-          />
+          <img class="w-6 md:ml-3 mt-3" src="/filter.svg" @click="$store.commit('setShowFilters')" />
         </button>
       </div>
     </div>
     <!-- need to wrap in transistion-group for posts to transition when they get pushed down when filter appear -->
     <transition-group name="filter" mode="in-out">
-      <div
-        class="flex justify-center mt-3 md:mx-3"
-        key="filter"
-        v-if="$store.state.showFilters"
-      >
+      <div class="flex justify-center mt-3 md:mx-3" key="filter" v-if="$store.state.showFilters">
         <PostFilter
-          class="border-2 border-gray-400 bg-secondaryBackground p-4 w-full mx-6 flex flex-col flex-wrap md:w-4/5 relative"
+          class="bg-secondaryBackground p-4 w-full mx-6 my-3 flex flex-col flex-wrap md:w-4/5 relative"
         />
       </div>
       <transition-group
@@ -41,9 +30,7 @@
           @click="getNewPosts((loadMore = true))"
           :disabled="!posts.next"
           :class="!posts.next && 'cursor-not-allowed'"
-        >
-          {{ posts.next ? "Load More" : "No More Posts..." }}
-        </button>
+        >{{ posts.next ? "Load More" : "No More Posts..." }}</button>
       </transition-group>
     </transition-group>
   </div>
@@ -55,7 +42,7 @@ import PostFilter from "@/components/form/PostFilter";
 export default {
   components: {
     PostCard,
-    PostFilter
+    PostFilter,
   },
   async asyncData({ route, $axios, store }) {
     const filters = { ...store.state.filters };
@@ -81,7 +68,7 @@ export default {
         this.posts = newPosts;
       }
       // this.$store.commit("setPosts", this.posts);
-    }
+    },
   },
   computed: {
     formatedUrl() {
@@ -95,15 +82,15 @@ export default {
         url += `&${key}=${format}`;
       }
       return url;
-    }
+    },
   },
   watch: {
     formatedUrl: {
       handler() {
         this.getNewPosts();
-      }
-    }
-  }
+      },
+    },
+  },
 };
 </script>
 
