@@ -6,12 +6,7 @@
     :class="expanded ? 'md:w-32' : 'md:w-14'"
   >
     <NavItem :expanded="expanded" name="Home" link="/" icon="/home-black.svg" />
-    <NavItem
-      :expanded="expanded"
-      name="Posts"
-      link="/posts"
-      icon="/post-black.svg"
-    />
+    <NavItem :expanded="expanded" name="Posts" link="/posts" icon="/post-black.svg" />
     <NavItem
       name="Add"
       link="/posts/create"
@@ -19,12 +14,7 @@
       :expanded="expanded"
       :middle="true"
     />
-    <NavItem
-      :expanded="expanded"
-      name="Profile"
-      link="/user"
-      icon="/user-black.svg"
-    />
+    <NavItem :expanded="expanded" name="Profile" link="/users/profile" icon="/user-black.svg" />
     <NavItem :expanded="expanded" name="More" link="#" icon="/more-black.svg" />
   </ul>
 </template>
@@ -33,12 +23,12 @@
 import NavItem from "./NavItem.vue";
 export default {
   component: {
-    NavItem
+    NavItem,
   },
   data() {
     return {
-      expanded: false
+      expanded: false,
     };
-  }
+  },
 };
 </script>
