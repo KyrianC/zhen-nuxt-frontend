@@ -2,14 +2,14 @@
   <div class="min-h-screen flex flex-col justify-center items-center">
     <h1 class="text-3xl font-bold m-4">Login</h1>
     <form @submit.prevent="userLogin">
-      <formInput
+      <FormInput
         label="Username"
         type="text"
         v-model="login.username"
         :error="error.username"
         :required="true"
       />
-      <formInput
+      <FormInput
         label="Password"
         type="password"
         v-model="login.password"
@@ -35,10 +35,10 @@
 </template>
 
 <script>
-import formInput from "~/components/form/formInput.vue";
+import FormInput from "~/components/form/FormInput.vue";
 export default {
   component: {
-    formInput,
+    FormInput,
   },
   data() {
     return {

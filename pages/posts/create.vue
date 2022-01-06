@@ -6,7 +6,7 @@
       method="POST"
       class="flex flex-col items-left justify-center"
     >
-      <formInput
+      <FormInput
         type="select"
         label="Difficulty"
         v-model="post.difficulty"
@@ -15,7 +15,7 @@
         :selected="post.difficulty"
         :error="error.difficulty"
       />
-      <formInput
+      <FormInput
         type="text"
         label="Title"
         v-model="post.title"
@@ -23,7 +23,7 @@
         name="title"
         :error="error.title"
       />
-      <formInput
+      <FormInput
         label="Description"
         name="description"
         type="text"
@@ -31,7 +31,7 @@
         :required="true"
         :error="error.description"
       />
-      <formInput
+      <FormInput
         label="Content"
         type="textarea"
         v-model="post.content"
@@ -45,12 +45,12 @@
 </template>
 
 <script>
-import formInput from "@/components/form/formInput.vue";
+import FormInput from "@/components/form/FormInput.vue";
 import languages from "@/static/languages";
 import difficulties from "@/static/difficulties";
 export default {
   component: {
-    formInput,
+    FormInput,
   },
   middleware: "auth",
   data() {

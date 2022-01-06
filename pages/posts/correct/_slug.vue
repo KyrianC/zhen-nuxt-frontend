@@ -52,11 +52,11 @@
 
 <script>
 import Modal from "~/components/Modal";
-import formInput from "~/components/form/formInput";
+import FormInput from "~/components/form/FormInput";
 import diffMatchPatch from "diff-match-patch";
 export default {
   component: {
-    FormInput: formInput,
+    FormInput: FormInput,
     Modal,
   },
   middleware: "auth",

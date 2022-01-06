@@ -2,28 +2,28 @@
   <div class="min-h-screen flex flex-col justify-center items-center">
     <h1 class="text-3xl font-bold m-4">Register</h1>
     <form @submit.prevent="userRegister">
-      <formInput
+      <FormInput
         label="Username"
         type="text"
         v-model="register.username"
         :error="error.username"
         :required="true"
       />
-      <formInput
+      <FormInput
         label="Email"
         type="email"
         v-model="register.email"
         :error="error.email"
         :required="true"
       />
-      <formInput
+      <FormInput
         label="Password"
         type="password"
         v-model="register.password1"
         :error="error.password1"
         :required="true"
       />
-      <formInput
+      <FormInput
         label="Confirm Password"
         type="password"
         v-model="register.password2"
@@ -48,10 +48,10 @@
 </template>
 
 <script>
-import formInput from "~/components/form/formInput.vue";
+import FormInput from "~/components/form/FormInput.vue";
 export default {
   component: {
-    formInput,
+    FormInput,
   },
   middleware: "auth",
   auth: "guest",

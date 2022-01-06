@@ -4,7 +4,7 @@
     method="POST"
     @submit.prevent="completeUserProfile"
   >
-    <formInput
+    <FormInput
       type="select"
       v-model="userDetail.learning_language"
       label="Language to learn"
@@ -13,7 +13,7 @@
       :required="true"
       :error="error.learning_language"
     />
-    <formInput
+    <FormInput
       type="select"
       v-model="userDetail.level"
       name="difficulty"
@@ -32,12 +32,12 @@
 </template>
 
 <script>
-import formInput from "~/components/form/formInput.vue";
+import FormInput from "~/components/form/FormInput.vue";
 import difficulties from "~/static/difficulties";
 import languages from "~/static/languages";
 export default {
   component: {
-    formInput,
+    FormInput,
   },
   middleware: "auth",
   data() {
