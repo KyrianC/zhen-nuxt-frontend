@@ -1,8 +1,11 @@
 <template>
-  <div id="edit">
-    <NuxtLink to="users/profile">< Cancel</NuxtLink>
-    <p class="color-red-400" v-if="error.non_field_error">{{ error.non_field_error }}</p>
-    <form>
+  <div id="edit" class="min-h-screen flex flex-col items-center justify-center">
+    <form
+      @submit.prevent="handleSubmit"
+      class="flex bg-primary p-12 rounded-md flex-col justify-center"
+    >
+      <h1 class="text-3xl text-center font-bold mb-4">Edit Profile</h1>
+      <p class="color-red-400" v-if="error.non_field_error">{{ error.non_field_error }}</p>
       <FormInput
         type="text"
         name="username"
@@ -71,8 +74,7 @@ export default {
     };
   },
   methods: {
-    async handleSubmit(e) {
-      e.preventDefault();
+    async handleSubmit() {
       try {
         await this.$axios.$put("/auth/user/", {
           ...this.user,

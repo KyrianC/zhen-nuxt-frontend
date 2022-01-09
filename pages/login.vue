@@ -1,7 +1,7 @@
 <template>
   <div class="min-h-screen flex flex-col justify-center items-center">
-    <h1 class="text-3xl font-bold m-4">Login</h1>
-    <form @submit.prevent="userLogin">
+    <form @submit.prevent="userLogin" class="bg-primary rounded-md p-8">
+      <h1 class="text-3xl text-center font-bold m-4">Login</h1>
       <FormInput
         label="Username"
         type="text"

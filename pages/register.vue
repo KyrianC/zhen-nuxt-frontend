@@ -1,7 +1,7 @@
 <template>
   <div class="min-h-screen flex flex-col justify-center items-center">
-    <h1 class="text-3xl font-bold m-4">Register</h1>
-    <form @submit.prevent="userRegister">
+    <form @submit.prevent="userRegister" class="bg-primary rounded-md p-8">
+      <h1 class="text-3xl font-bold mb-4 text-center">Register</h1>
       <FormInput
         label="Username"
         type="text"

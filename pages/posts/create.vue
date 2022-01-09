@@ -1,11 +1,11 @@
 <template>
-  <div class="flex flex-col items-center justify-center py-4">
-    <h1 class="text-2xl font-bold">Create a Post</h1>
+  <div class="flex flex-col items-center justify-center md:py-4">
     <form
       @submit.prevent="postCreate"
       method="POST"
-      class="flex flex-col items-left justify-center"
+      class="flex flex-col items-left justify-center bg-primary p-8 md:rounded-md"
     >
+      <h1 class="text-2xl text-center font-bold">Create a Post</h1>
       <FormInput
         type="select"
         label="Difficulty"

@@ -1,34 +1,33 @@
 <template>
-  <form
-    class="flex flex-col justify-center items-center"
-    method="POST"
-    @submit.prevent="completeUserProfile"
-  >
-    <FormInput
-      type="select"
-      v-model="userDetail.learning_language"
-      label="Language to learn"
-      name="language"
-      :options="languages"
-      :required="true"
-      :error="error.learning_language"
-    />
-    <FormInput
-      type="select"
-      v-model="userDetail.level"
-      name="difficulty"
-      label="Your level of proficiency in the language above"
-      :options="difficulties"
-      :required="true"
-      :error="error.level"
-    />
-    <p
-      class="text-red-500"
-      v-for="(message, index) in error.non_field_errors"
-      :key="index"
-    >{{ message }}</p>
+  <div class="min-h-screen flex justify-center items-center">
+    <form class="bg-primary p-12 rounded-md" method="POST" @submit.prevent="completeUserProfile">
+      <h1 class="text-3xl text-center font-bold mb-4">Complete your Profile</h1>
+      <FormInput
+        type="select"
+        v-model="userDetail.learning_language"
+        label="Language to learn"
+        name="language"
+        :options="languages"
+        :required="true"
+        :error="error.learning_language"
+      />
+      <FormInput
+        type="select"
+        v-model="userDetail.level"
+        name="difficulty"
+        label="Your level of proficiency in the language above"
+        :options="difficulties"
+        :required="true"
+        :error="error.level"
+      />
+      <p
+        class="text-red-500"
+        v-for="(message, index) in error.non_field_errors"
+        :key="index"
+      >{{ message }}</p>
       <Button name="Submit" btnType="submit" scheme="primary" />
     </form>
+  </div>
 </template>
 
 <script>
