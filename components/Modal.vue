@@ -3,9 +3,8 @@
     @click.self="close"
     class="fixed flex bg-black bg-opacity-50 justify-center items-center h-full w-full overflow-hidden"
   >
-    <div
-      class="flex items-center flex-col w-11/12 md:w-1/2 bg-primary border-2 border-white p-3 max-h-3/4"
-    >
+    <div class="flex w-content items-center flex-col bg-primary p-8 max-h-3/4">
+      <span class="ml-auto block pb-4">X</span>
       <h3 class="text-center text-xl font-bold">
         <slot name="header">Info</slot>
       </h3>
@@ -14,16 +13,13 @@
           <slot name="body"></slot>
         </p>
       </div>
-      <div>
-        <button
-          class="m-2 bg-secondary p-2 text-primary border-2 border-secondary"
-          @click="confirm"
-        >
+      <div class="flex">
+        <div class="m-1" @click="confirm">
           <slot name="primary-btn"></slot>
-        </button>
-        <button class="m-2 p-2 text-secondary border-2 border-secondary" @click.self="close">
+        </div>
+        <div class="m-1" @click="close">
           <slot name="secondary-btn">OK</slot>
-        </button>
+        </div>
       </div>
     </div>
   </div>

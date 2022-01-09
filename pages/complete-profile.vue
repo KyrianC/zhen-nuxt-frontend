@@ -27,17 +27,19 @@
       v-for="(message, index) in error.non_field_errors"
       :key="index"
     >{{ message }}</p>
-    <button type="submit">submit</button>
-  </form>
+      <Button name="Submit" btnType="submit" scheme="primary" />
+    </form>
 </template>
 
 <script>
 import FormInput from "~/components/form/FormInput.vue";
+import Button from "~/components/common/Button.vue";
 import difficulties from "~/static/difficulties";
 import languages from "~/static/languages";
 export default {
-  component: {
+  components: {
     FormInput,
+    Button,
   },
   middleware: "auth",
   data() {
@@ -86,5 +88,3 @@ export default {
   },
 };
 </script>
-
-<style></style>

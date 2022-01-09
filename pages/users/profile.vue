@@ -15,15 +15,10 @@
           <span class="font-bold">Level:</span>
           <span :class="`text-difficulty${$auth.user.level}-400`">{{ $auth.user.get_level_display }}</span>
         </p>
-        <div class="mt-4">
-          <button
-            class="mx-2 transition duration-500 p-1 text-black bg-secondary border-2 border-secondary hover:bg-secondaryBackground hover:text-white"
-          >
-            <NuxtLink to="/users/edit">Edit</NuxtLink>
-          </button>
-          <button
-            class="mx-2 text-white transition duration-500 p-1 text-black bg-secondaryBackground border-2 border-secondaryBackground hover:bg-primary hover:border-primary"
-          >Delete</button>
+        <div class="mt-4 flex justify-evenly">
+          <Button name="Edit" size="xs" scheme="primary" linkTo="/users/edit" />
+          <Button name="Delete" size="xs" scheme="danger" linkTo="#" />
+          <Button @handleClick="$auth.logout()" name="Logout" size="xs" scheme="secondary" />
         </div>
       </div>
     </section>
@@ -53,7 +48,12 @@
 </template>
 
 <script>
+import Button from "~/components/common/Button.vue";
 export default {
+  components: {
+    Button,
+  },
+  middleware: "auth",
   data() {
     return {
       show: "Posts",

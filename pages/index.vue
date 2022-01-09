@@ -13,16 +13,8 @@
       </transition>
       <p class="text-xl opacity-70 m-3">Read, write and help the community to improve</p>
       <div class="text-2xl flex flex-col md:flex-row my-3">
-        <NuxtLink to="/posts" class="m-3">
-          <button
-            class="transition duration-500 p-2 text-black bg-secondary border-2 border-secondary hover:bg-secondaryBackground hover:text-white"
-          >Practice Reading</button>
-        </NuxtLink>
-        <NuxtLink to="/posts" class="m-3">
-          <button
-            class="transition duration-500 p-2 text-white border-b-2 border-secondary hover:bg-secondary hover:text-black hover:border-2"
-          >Learn More</button>
-        </NuxtLink>
+        <Button class="m-3" name="Practice Reading" scheme="primary" linkTo="/posts" />
+        <Button class="m-3" name="Learn More" scheme="secondary" linkTo="/posts" />
       </div>
     </div>
     <section class="bg-primary h-96">hello</section>
@@ -30,7 +22,11 @@
 </template>
 
 <script>
+import Button from "~/components/common/Button.vue";
 export default {
+  components: {
+    Button,
+  },
   data() {
     return {
       words: ["Practice", "Read", "Write", "Correct", "Translate"],

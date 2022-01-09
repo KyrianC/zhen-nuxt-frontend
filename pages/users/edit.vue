@@ -41,15 +41,22 @@
         :required="true"
         :error="error.level"
       />
-      <button @click="handleSubmit" type="submit">Confirm Edit</button>
+      <div class="flex justify-evenly">
+        <Button class="mt-4" name="Confirm Edit" scheme="primary" btnType="submit" />
+        <Button linkTo="/users/profile" class="mt-4" name="Cancel" scheme="secondary" />
+      </div>
     </form>
   </div>
 </template>
 
 <script>
+import Button from "~/components/common/Button.vue";
 import languages from "~/static/languages";
 import difficulties from "~/static/difficulties";
 export default {
+  components: {
+    Button,
+  },
   data() {
     return {
       user: {

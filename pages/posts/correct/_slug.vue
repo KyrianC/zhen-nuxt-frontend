@@ -26,8 +26,9 @@
         :error="error.content"
         :required="true"
       />
-      <button @click.prevent="diff">submit</button>
-      <button v-if="isCorrectionNotNeeded">No errors!</button>
+      <Button v-if="isCorrectionNotNeeded" name="No errors!" scheme="primary" />
+      <Button v-else @handleClick.prevent="diff" name="Submit" scheme="primary" />
+      <Button :linkTo="`/posts/${post.slug}`" name="Cancel" scheme="secondary" />
     </form>
     <transition name="fade">
       <Modal v-show="diffResult.length" @close="diffResult = []" @confirm="postCorrect">
@@ -43,8 +44,12 @@
             "
           >{{ word[1] }}</span>
         </template>
-        <template v-slot:primary-btn>Submit Correction</template>
-        <template v-slot:secondary-btn>Cancel</template>
+        <template v-slot:primary-btn>
+          <Button name="Submit Correction" scheme="primary" />
+        </template>
+        <template v-slot:secondary-btn>
+          <Button name="Cancel" scheme="secondary" />
+        </template>
       </Modal>
     </transition>
   </div>
@@ -53,11 +58,13 @@
 <script>
 import Modal from "~/components/Modal";
 import FormInput from "~/components/form/FormInput";
+import Button from "~/components/common/Button.vue";
 import diffMatchPatch from "diff-match-patch";
 export default {
-  component: {
-    FormInput: FormInput,
+  components: {
+    FormInput,
     Modal,
+    Button,
   },
   middleware: "auth",
   async asyncData({ params, $axios }) {

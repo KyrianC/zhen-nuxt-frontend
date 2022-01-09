@@ -39,18 +39,20 @@
         :required="true"
         :error="error.content"
       />
-      <button>submit</button>
+      <Button name="Submit" scheme="primary" btnType="submit" />
     </form>
   </div>
 </template>
 
 <script>
 import FormInput from "@/components/form/FormInput.vue";
+import Button from "~/components/common/Button.vue";
 import languages from "@/static/languages";
 import difficulties from "@/static/difficulties";
 export default {
-  component: {
+  components: {
     FormInput,
+    Button,
   },
   middleware: "auth",
   data() {

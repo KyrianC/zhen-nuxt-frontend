@@ -35,23 +35,25 @@
         :key="index"
         v-for="(message, index) in error.non_field_errors"
       >{{ message }}</p>
-      <button
-        class="p-2 my-4 border-2 border-secondary hover:bg-secondary hover:text-secondaryBackground transition duration-500"
-        type="submit"
-      >Submit</button>
+      <div class="flex justify-evenly">
+        <Button class="mt-4" name="Register" scheme="primary" btnType="submit" />
+        <Button linkTo="/" class="mt-4" name="Cancel" scheme="secondary" />
+      </div>
     </form>
-    <small>
+    <small class="mt-3">
       Already have an account?
-      <NuxtLink to="/login">Login Now</NuxtLink>
+      <NuxtLink class="text-secondary underline" to="/login">Login Now</NuxtLink>
     </small>
   </div>
 </template>
 
 <script>
+import Button from "~/components/common/Button.vue";
 import FormInput from "~/components/form/FormInput.vue";
 export default {
-  component: {
+  components: {
     FormInput,
+    Button,
   },
   middleware: "auth",
   auth: "guest",

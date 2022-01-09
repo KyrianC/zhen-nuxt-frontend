@@ -8,37 +8,41 @@
     <p
       class="text-justify mx-2 my-4 text-lg text-gray-300 md:text-xl leading-8 max-w-prose whitespace-pre-line"
     >{{ post.content }}</p>
-    <button
-      class="border-2 p-2 border-red-400 text-red-400 mb-4 hover:bg-red-400 hover:text-white transition duration-500"
+    <!-- @click.prevent="showDeleteModal = true" -->
+    <Button
       v-if="$auth.loggedIn && $auth.user.pk == post.author.pk"
-      @click.prevent="showDeleteModal = true"
-    >Delete Post</button>
+      @handleClick.prevent="showDeleteModal = true"
+      name="Delete Post"
+      scheme="danger"
+    />
     <Modal v-show="showDeleteModal" @close="showDeleteModal = false" @confirm="deletePost">
       <template v-slot:header>
         Are you sure you want to Delete
         <span class="capitalize italic">"{{ post.title }}"</span>
       </template>
-      <template v-slot:primary-btn>Delete</template>
-      <template v-slot:secondary-btn>Cancel</template>
+      <template v-slot:primary-btn>
+        <Button name="Delete" scheme="danger" />
+      </template>
+      <template v-slot:secondary-btn>
+        <Button name="Cancel" scheme="secondary" />
+      </template>
     </Modal>
-    <NuxtLink
-      class="border-2 p-2 border-green-400 text-green-400 mb-4 hover:bg-green-400 hover:text-white transition duration-500"
-      v-if="
-        $auth.loggedIn
-          ? $auth.user.language !== post.language &&
-            $auth.user.pk !== post.author.pk
-          : true
-      "
-      :to="`/posts/correct/${post.slug}`"
-    >Correct Post</NuxtLink>
+    <Button
+      v-if="canCorrectPost"
+      :linkTo="`/posts/correct/${post.slug}`"
+      name="Correct Post"
+      scheme="primary"
+    />
   </div>
 </template>
 
 <script>
 import Modal from "~/components/Modal";
+import Button from "~/components/common/Button.vue";
 export default {
   components: {
     Modal,
+    Button,
   },
   transition(to, from) {
     let name = "page";
@@ -75,6 +79,15 @@ export default {
         console.log(err);
         this.$toast.error("An error occured, please try again");
       }
+    },
+  },
+  computed: {
+    canCorrectPost() {
+      const loggedIn = this.$auth.loggedIn;
+      const level = this.$auth.user.level >= this.post.difficulty;
+      const language = this.$auth.user.learning_language != this.post.language;
+      const author = this.$auth.user.pk != this.post.author.pk;
+      return loggedIn && level && language && author;
     },
   },
 };

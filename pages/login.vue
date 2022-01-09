@@ -21,23 +21,26 @@
         v-for="(message, index) in error.non_field_errors"
         :key="index"
       >{{ message }}</p>
-      <button
-        class="p-2 my-4 border-2 border-secondary hover:bg-secondary hover:text-secondaryBackground transition duration-500"
-        type="submit"
-      >Submit</button>
+      <div class="flex justify-evenly">
+        <Button class="mt-4" name="Login" scheme="primary" btnType="submit" />
+        <Button linkTo="/" class="mt-4" name="Cancel" scheme="secondary" />
+      </div>
     </form>
-    <small>
-      No account yet?
-      <NuxtLink to="/register">Register Now</NuxtLink>
-    </small>
-    <button v-if="$auth.loggedIn" @click="userLogout">logout</button>
+    <div class="mt-6">
+      <small>
+        No account yet?
+        <NuxtLink class="text-secondary underline" to="/register">Register Now</NuxtLink>
+      </small>
+    </div>
   </div>
 </template>
 
 <script>
+import Button from "~/components/common/Button.vue";
 import FormInput from "~/components/form/FormInput.vue";
 export default {
-  component: {
+  components: {
+    Button,
     FormInput,
   },
   data() {
@@ -52,7 +55,7 @@ export default {
   methods: {
     async userLogin() {
       try {
-        let response = await this.$auth.loginWith("local", {
+        await this.$auth.loginWith("local", {
           data: this.login,
         });
         if (
