@@ -4,7 +4,7 @@
       key="posts"
       name="flip-list"
       tag="div"
-      class="relative text-gray-300 flex flex-wrap mx-6 justify-center"
+      class="text-gray-300 flex flex-wrap mx-6 justify-center"
     >
       <!-- post list -->
       <PostCard v-for="post in posts.results" :post="post" :key="post.id" />
