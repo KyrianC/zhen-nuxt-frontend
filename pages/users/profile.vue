@@ -48,9 +48,11 @@
 </template>
 
 <script>
+import PostList from "~/components/PostList.vue";
 import Button from "~/components/common/Button.vue";
 export default {
   components: {
+    PostList,
     Button,
   },
   middleware: "auth",
@@ -59,11 +61,13 @@ export default {
       show: "Posts",
     };
   },
-  async asyncData({ $axios }) {
-    const posts = await $axios.$get(`users/testuser/posts/`);
-    const corrections = await $axios.$get(`users/testuser/corrections/`);
-    console.log(posts);
-    return { result: { Posts: posts, Corrections: corrections } };
+  async asyncData({ $axios, $auth }) {
+    const username = $auth.user.username;
+    const posts = await $axios.$get(`users/${username}/posts/`);
+    const corrections = await $axios.$get(`users/${username}/corrections/`);
+    return {
+      result: { Posts: posts, Corrections: corrections },
+    };
   },
 };
 </script>

@@ -2,7 +2,7 @@
   <div class="min-h-screen bg-primary">
     <FilterIcon />
     <transition-group tag="div" name="filter" mode="in-out">
-      <PostFilter key="filter" v-if="$store.state.showFilters" />
+      <PostFilter key="filter" v-show="$store.state.showFilters" />
       <PostList :posts="posts" key="posts" />
     </transition-group>
   </div>

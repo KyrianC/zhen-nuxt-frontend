@@ -1,14 +1,6 @@
 <template>
   <div class="px-3 bg-secondaryBackground flex flex-col items-center min-h-screen">
-    <h1
-      class="my-4 text-2xl font-bold text-center border-b-2 capitalize"
-      :class="`border-difficulty${post.difficulty}-400`"
-    >{{ post.title }}</h1>
-    <p class="italic">Written by {{ post.author.username }}</p>
-    <p
-      class="text-justify mx-2 my-4 text-lg text-gray-300 md:text-xl leading-8 max-w-prose whitespace-pre-line"
-    >{{ post.content }}</p>
-    <!-- @click.prevent="showDeleteModal = true" -->
+    <PostContent :post="post" />
     <Button
       v-if="$auth.loggedIn && $auth.user.pk == post.author.pk"
       @handleClick.prevent="showDeleteModal = true"
@@ -39,10 +31,12 @@
 <script>
 import Modal from "~/components/Modal";
 import Button from "~/components/common/Button.vue";
+import PostContent from "~/components/PostContent.vue";
 export default {
   components: {
     Modal,
     Button,
+    PostContent,
   },
   transition(to, from) {
     let name = "page";
