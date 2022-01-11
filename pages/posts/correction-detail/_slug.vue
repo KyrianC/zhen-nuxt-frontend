@@ -1,81 +1,61 @@
 <template>
-  <div class="min-h-screen">
+  <div id="correction-detail" class="min-h-screen">
     <div class="relative flex">
       <PostContent :class="postStyle" :post="post" />
 
-      <!-- TODO fix scrollbar appearing during transition -->
-      <transition name="popup-slow">
-        <div class="z-10" v-if="selectedCorrection" :class="showCorrections && 'md:w-2/3 md:pr-8'">
+      <transition name="popup">
+        <div
+          id="correction"
+          class="z-10 w-full relative"
+          v-if="selectedCorrection"
+          :class="showCorrections && 'md:w-2/3 md:pr-8'"
+        >
           <!-- TODO icon + better placement -->
-          <span class="absolute left-2 top-2 cursor-pointer" @click="selectedCorrection = null">x</span>
-          <PostContent :diff="diff" :post="selectedCorrection" />
+          <span
+            class="absolute left-5 top-4 text-2xl cursor-pointer"
+            title="close"
+            @click="selectedCorrection = null"
+          >x</span>
+          <PostContent key="correction" :diff="diff" :post="selectedCorrection" />
+          <div class="flex p-4 bg-secondaryBackground justify-center">
+            <CommonButton class="mx-2" scheme="primary" name="validate this Correction" />
+            <CommonButton
+              class="mx-2"
+              scheme="secondary"
+              name="Cancel"
+              @handleClick="selectedCorrection = null"
+            />
+          </div>
         </div>
       </transition>
 
-      <!-- show on phone/small screens only -->
-      <transition name="fade">
-        <div
-          @click="showCorrections = false"
-          v-show="showCorrections"
-          class="md:hidden fixed h-screen w-screen top-0 bg-black bg-opacity-50 z-20"
-        />
-      </transition>
-      <transition name="popup">
-        <section
-          class="md:hidden fixed inset-x-0 top-16 min-h-screen bg-primary shadow-2xl rounded-3xl py-8 px-4 z-20"
-          v-show="showCorrections"
-          id="correction-list"
-        >
-          <div
-            v-for="correction in corrections.results"
-            :key="correction.id"
-            @click="selectCorrectionSm(correction)"
-            class="bg-primary shadow-2xl border-2 p-4 rounded-lg cursor-pointer"
-            :class="(selectedCorrection && selectedCorrection.id == correction.id) ? 'border-white' : 'border-black'"
-          >{{ correction.title }} - by {{ correction.author.username }}</div>
-        </section>
-      </transition>
-
-      <!-- show on bigger screen -->
-      <transition name="slide">
-        <section
-          v-show="showCorrections"
-          class="hidden md:block fixed right-0 min-h-screen bg-primary w-1/3 p-4 z-20"
-          id="correction-list"
-        >
-          <!-- TODO change to and Icon button -->
-          <CommonButton
-            @handleClick="showCorrections = false"
-            size="xs"
-            name="hide"
-            scheme="secondary"
-            class="mb-3"
-          />
-          <div
-            v-for="correction in corrections.results"
-            :key="correction.id"
-            @click="selectCorrectionMd(correction)"
-            class="bg-primary shadow-2xl border-2 p-4 rounded-lg cursor-pointer"
-            :class="(selectedCorrection && selectedCorrection.id == correction.id) ? 'border-white' : 'border-black'"
-          >{{ correction.title }} - by {{ correction.author.username }}</div>
-        </section>
-      </transition>
+      <CorrectionListPopup
+        :showCorrections="showCorrections"
+        :corrections="corrections"
+        :selectCorrection="selectCorrection"
+        :selectedCorrection="selectedCorrection"
+        :closeCorrections="closeCorrections"
+      />
     </div>
 
-    <button
-      @click="showCorrections = true"
-      v-show="!showCorrections"
-      class="rounded-md fixed inset-x-0 bottom-16 left-1/2 bg-secondary text-black shadow p-2 transform -translate-x-1/2 z-20"
-    >show Corrections</button>
+    <transition name="fade">
+      <button
+        @click="showCorrections = true"
+        v-show="!showCorrections && showButton"
+        class="rounded-md fixed bottom-16 left-1/2 bg-secondary text-black p-2 transform -translate-x-1/2 z-20"
+      >show Corrections</button>
+    </transition>
   </div>
 </template>
 
 <script>
 import PostContent from "~/components/PostContent.vue";
+import CorrectionListPopup from "~/components/CorrectionListPopup.vue";
 import diffMatchPatch from "diff-match-patch";
 export default {
   components: {
     PostContent,
+    CorrectionListPopup,
   },
   async asyncData({ params, $axios }) {
     try {
@@ -91,6 +71,7 @@ export default {
       showCorrections: false,
       selectedCorrection: null,
       diff: [],
+      showButton: true,
     };
   },
   methods: {
@@ -115,12 +96,14 @@ export default {
       dmp.diff_cleanupSemantic(diff);
       this.diff = diff;
     },
-    selectCorrectionMd(correction) {
+    selectCorrection(correction, screenSize) {
       this.selectedCorrection = correction;
-      this.getDiff();
+      this.getDiff(correction);
+      if (screenSize == "sm") {
+        this.showCorrections = false;
+      }
     },
-    selectCorrectionSm(correction) {
-      this.selectCorrectionMd(correction);
+    closeCorrections() {
       this.showCorrections = false;
     },
   },
@@ -129,10 +112,9 @@ export default {
       let result = "";
       if (this.showCorrections) {
         result += "md:w-2/3 md:pr-8 ";
-        console.log("SHOW CORRECTION");
       }
       if (this.selectedCorrection) {
-        console.log("ABSOLUTE");
+        // make transition smoother when selecting correction
         result += "absolute z-0";
       }
       return result;
@@ -141,53 +123,51 @@ export default {
   created() {
     this.fetchData();
   },
+  mounted() {
+    let prevScrollpos = window.pageYOffset;
+    window.onscroll = () => {
+      let currentScrollPos = window.pageYOffset;
+      if (prevScrollpos > currentScrollPos) {
+        this.showButton = true;
+      } else {
+        this.showButton = false;
+      }
+      prevScrollpos = currentScrollPos;
+    };
+  },
 };
 </script>
 
 <style scoped>
+#correction-detail {
+  overflow: hidden;
+}
+
+#correction {
+  transition: width 0.3s ease-in-out, transform 0.5s ease-in-out,
+    opacity 0.5s ease-in-out;
+}
+
 .popup-enter-active,
 .popup-leave-active {
-  transition: all 0.3s ease-in-out;
+  position: absolute;
 }
 
 .popup-enter,
 .popup-leave-to {
   transform: translateY(100%);
-  position: absolute;
+  opacity: 0;
 }
-
-.popup-slow-enter-active,
-.popup-slow-leave-active {
-  transition: all 0.5s ease-in-out;
-}
-
-.popup-slow-enter,
-.popup-slow-leave-to {
-  transform: translateY(100%);
-  position: absolute;
-}
-
-.slide-enter-active,
-.slide-leave-active {
-  transition: all 0.3s ease-in-out;
-}
-
-.fade-enter-actvie,
+.fade-enter-active,
 .fade-leave-active {
   transition: all 0.3s ease-in-out;
 }
 
-.fade-enter,
 .fade-leave-to {
   opacity: 0;
+  transform: translate(-50%, -30px);
 }
-
-.slide-enter,
-.slide-leave-to {
-  transform: translateX(100%);
-}
-
-#original-post {
-  transition: all 0.3s ease-in-out;
+.fade-enter {
+  opacity: 0;
 }
 </style>

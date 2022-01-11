@@ -35,5 +35,8 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
+#original-post {
+  transition: width 0.3s ease-in-out;
+}
 </style>
