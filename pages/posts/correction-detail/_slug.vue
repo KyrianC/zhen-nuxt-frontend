@@ -3,42 +3,46 @@
     <div class="relative flex">
       <PostContent :class="postStyle" :post="post" />
 
-      <transition name="popup">
-        <div
-          id="correction"
-          class="z-10 w-full relative"
-          v-if="selectedCorrection"
-          :class="showCorrections && 'md:w-2/3 md:pr-8'"
-        >
-          <!-- TODO icon + better placement -->
-          <span
-            class="absolute left-5 top-4 text-2xl cursor-pointer"
-            title="close"
-            @click="selectedCorrection = null"
-          >x</span>
-          <PostContent key="correction" :diff="diff" :post="selectedCorrection" />
-          <div class="flex p-4 bg-secondaryBackground justify-center">
-            <CommonButton class="mx-2" scheme="primary" name="validate this Correction" />
-            <CommonButton
-              class="mx-2"
-              scheme="secondary"
-              name="Cancel"
-              @handleClick="selectedCorrection = null"
-            />
-          </div>
-        </div>
-      </transition>
+      <template v-if="$auth.loggedIn && $auth.user.pk == post.author.pk">
+        <transition name="popup">
+          <div
+            id="correction"
+            class="z-10 w-full relative"
+            v-if="selectedCorrection"
+            :class="showCorrections && 'md:w-2/3 md:pr-8'"
+          >
+            <!-- TODO icon + better placement -->
+            <span
+              class="absolute left-5 top-4 text-2xl cursor-pointer"
+              title="close"
+              @click="selectedCorrection = null"
+            >x</span>
+            <PostContent key="correction" :diff="diff" :post="selectedCorrection" />
+            <div class="flex p-4 bg-secondaryBackground justify-center">
+              <!-- FIX z-index not working -->
+              <ValidateCorrectionModal :correction="selectedCorrection" />
 
-      <CorrectionListPopup
-        :showCorrections="showCorrections"
-        :corrections="corrections"
-        :selectCorrection="selectCorrection"
-        :selectedCorrection="selectedCorrection"
-        :closeCorrections="closeCorrections"
-      />
+              <Button
+                class="mx-2"
+                scheme="secondary"
+                name="Cancel"
+                @handleClick="selectedCorrection = null"
+              />
+            </div>
+          </div>
+        </transition>
+
+        <CorrectionListPopup
+          :showCorrections="showCorrections"
+          :corrections="corrections"
+          :selectCorrection="selectCorrection"
+          :selectedCorrection="selectedCorrection"
+          :closeCorrections="closeCorrections"
+        />
+      </template>
     </div>
 
-    <transition name="fade">
+    <transition v-if="$auth.loggedIn && $auth.user.pk == post.author.pk" name="fade">
       <button
         @click="showCorrections = true"
         v-show="!showCorrections && showButton"
@@ -51,11 +55,15 @@
 <script>
 import PostContent from "~/components/PostContent.vue";
 import CorrectionListPopup from "~/components/CorrectionListPopup.vue";
+import Button from "~/components/common/Button.vue";
+import ValidateCorrectionModal from "~/components/correction/ValidateCorrectionModal.vue";
 import diffMatchPatch from "diff-match-patch";
 export default {
   components: {
     PostContent,
     CorrectionListPopup,
+    Button,
+    ValidateCorrectionModal,
   },
   async asyncData({ params, $axios }) {
     try {
@@ -84,6 +92,20 @@ export default {
         console.log(corrections);
         this.corrections = corrections;
       } catch (e) {
+        console.log(e);
+      }
+    },
+    async validateCorrection() {
+      try {
+        await this.$axios.$post(
+          `posts/correction/validate/${this.selectedCorrection.id}/`
+        );
+        this.$toast.success(
+          `Validated Correction by ${this.selectedCorrection.author.username}`
+        );
+        this.$router.push(`/posts/correction-detail/${this.post.slug}`);
+      } catch (e) {
+        this.$toast.error("something went wrong.");
         console.log(e);
       }
     },
@@ -141,6 +163,7 @@ export default {
 <style scoped>
 #correction-detail {
   overflow: hidden;
+  /* scroll-behavior: smooth; */
 }
 
 #correction {
