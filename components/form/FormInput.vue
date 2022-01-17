@@ -1,12 +1,15 @@
 <template>
   <div>
-    <label v-if="label" for="name" class="block pb-1 pt-3 text-lg">{{ label }}:</label>
+    <label v-if="label" for="name" class="block pb-1 pt-3 text-lg">
+      {{ label }}:
+      <span class="text-red-300 text-sm" v-if="required">*</span>
+    </label>
 
     <textarea
       v-if="type === 'textarea'"
       :name="name"
-      rows="15"
-      cols="60"
+      :rows="rows ? rows : 15"
+      :cols="cols ? cols : 60"
       tabindex
       :placeholder="placeholder"
       @input="handleInput($event.target.value)"
@@ -62,7 +65,9 @@ export default {
     required: Boolean,
     disabled: Boolean,
     selected: String,
-    defaultValue: String,
+    defaultValue: String | Number,
+    rows: String,
+    cols: String,
   },
   methods: {
     handleInput(input) {
