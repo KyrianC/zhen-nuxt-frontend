@@ -7,7 +7,7 @@
         <transition name="popup">
           <div
             id="correction"
-            class="z-10 w-full relative"
+            class="w-full relative"
             v-if="selectedCorrection"
             :class="showCorrections && 'md:w-2/3 md:pr-8'"
           >
@@ -19,7 +19,6 @@
             >x</span>
             <PostContent key="correction" :diff="diff" :post="selectedCorrection" />
             <div class="flex p-4 bg-secondaryBackground justify-center">
-              <!-- FIX z-index not working -->
               <ValidateCorrectionModal :correction="selectedCorrection" />
 
               <Button
@@ -46,7 +45,7 @@
       <button
         @click="showCorrections = true"
         v-show="!showCorrections && showButton"
-        class="rounded-md fixed bottom-16 left-1/2 bg-secondary text-black p-2 transform -translate-x-1/2 z-20"
+        class="rounded-md fixed bottom-16 left-1/2 bg-secondary text-black p-2 transform -translate-x-1/2"
       >show Corrections</button>
     </transition>
   </div>
@@ -65,17 +64,32 @@ export default {
     Button,
     ValidateCorrectionModal,
   },
-  async asyncData({ params, $axios }) {
+  async asyncData({ params, $axios, $auth }) {
     try {
-      const post = await $axios.$get(`/posts/${params.slug}/`);
-      return { post };
+      let post = await $axios.$get(`/posts/${params.slug}/`);
+      const corrections = await $axios.$get(
+        `/posts/correction/list/${params.slug}/`
+      );
+      const valid = corrections.results.find((x) => x.is_valid == true);
+      // don't show valid correction if user is original post author
+      if (
+        (($auth.loggedIn && $auth.user.pk != post.author.pk) ||
+          !$auth.loggedIn) &&
+        valid
+      ) {
+        post = valid;
+      }
+      console.log(post);
+      return {
+        post,
+        corrections,
+      };
     } catch (e) {
       console.log(e);
     }
   },
   data() {
     return {
-      corrections: {},
       showCorrections: false,
       selectedCorrection: null,
       diff: [],
@@ -83,18 +97,6 @@ export default {
     };
   },
   methods: {
-    async fetchData() {
-      try {
-        const slug = this.$route.params.slug;
-        const corrections = await this.$axios.$get(
-          `/posts/correction/list/${slug}`
-        );
-        console.log(corrections);
-        this.corrections = corrections;
-      } catch (e) {
-        console.log(e);
-      }
-    },
     async validateCorrection() {
       try {
         await this.$axios.$post(
@@ -137,13 +139,10 @@ export default {
       }
       if (this.selectedCorrection) {
         // make transition smoother when selecting correction
-        result += "absolute z-0";
+        result += "absolute";
       }
       return result;
     },
-  },
-  created() {
-    this.fetchData();
   },
   mounted() {
     let prevScrollpos = window.pageYOffset;
