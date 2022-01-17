@@ -26,7 +26,27 @@
         :error="error.content"
         :required="true"
       />
-      <Button v-if="isCorrectionNotNeeded" name="No errors!" scheme="primary" />
+      <FormInput
+        label="Notes"
+        name="note"
+        type="textarea"
+        rows="3"
+        placeholder="Notes about the correction that can help the author improve"
+        v-model="correction.note"
+        :error="error.note"
+        :required="false"
+      />
+      <ScoreInput
+        :correction="correction"
+        :isCorrectionNotNeeded="isCorrectionNotNeeded"
+        :error="error"
+      />
+      <Button
+        v-if="isCorrectionNotNeeded"
+        @handleClick.prevent="diff"
+        name="No errors!"
+        scheme="primary"
+      />
       <Button v-else @handleClick.prevent="diff" name="Submit" scheme="primary" />
       <Button :linkTo="`/posts/${post.slug}`" name="Cancel" scheme="secondary" />
     </form>
@@ -56,13 +76,15 @@
 </template>
 
 <script>
-import Modal from "~/components/Modal";
+import Modal from "~/components/common/Modal";
+import ScoreInput from "~/components/form/ScoreInput.vue";
 import FormInput from "~/components/form/FormInput";
 import Button from "~/components/common/Button.vue";
 import diffMatchPatch from "diff-match-patch";
 export default {
   components: {
     FormInput,
+    ScoreInput,
     Modal,
     Button,
   },
@@ -81,9 +103,12 @@ export default {
         title: "",
         content: "",
         slug: "",
+        note: "Perfect",
+        score: 10,
+        score_comment: "",
       },
       diffResult: [],
-      error: "",
+      error: {},
     };
   },
   methods: {
@@ -105,6 +130,9 @@ export default {
             title: this.correction.title || this.post.title,
             content: this.correction.content || this.post.content,
             slug: this.post.slug,
+            note: this.correction.note,
+            score: this.correction.score,
+            score_comment: this.correction.score_comment,
           }
         );
         console.log(res);
@@ -116,6 +144,7 @@ export default {
         console.log(err);
         this.error = err.response.data;
         this.$toast.error("An error occured, please try again");
+        this.diffResult = [];
       }
     },
   },
