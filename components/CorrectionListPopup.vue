@@ -1,5 +1,6 @@
 <template>
   <div>
+    <!-- TODO DRY Refactor -->
     <transition name="fade">
       <div
         id="background"
@@ -9,22 +10,22 @@
       />
     </transition>
     <!-- show on phone/small screens only -->
-    <!-- TODO fix transition glitching when screen is scrolled -->
     <transition name="popup">
       <section
-        class="md:hidden fixed inset-x-0 top-16 min-h-screen bg-primary shadow-2xl rounded-3xl py-4 px-4 z-20"
+        class="md:hidden fixed inset-x-0 top-16 min-h-screen bg-primary shadow-2xl rounded-3xl py-4 px-4"
         v-show="showCorrections"
         id="correction-list"
       >
         <!-- TODO change icon or somethin else -->
         <CommonButton @handleClick="closeCorrections" scheme="secondary" name="close" class="mb-4" />
-        <div
+        <CorrectionCard
           v-for="correction in corrections.results"
+          :correction="correction"
           :key="correction.id"
-          @click="selectCorrection(correction, 'sm')"
-          class="bg-primary shadow-2xl border-2 p-4 rounded-lg cursor-pointer"
-          :class="(selectedCorrection && selectedCorrection.id == correction.id) ? 'border-white' : 'border-black'"
-        >{{ correction.title }} - by {{ correction.author.username }}</div>
+          :selected="selectedCorrection && selectedCorrection.id == correction.id"
+          @handleClick="selectCorrection(correction, 'sm')"
+        />
+        <div v-if="!corrections.count">No Corrections Yet</div>
       </section>
     </transition>
 
@@ -32,7 +33,7 @@
     <transition name="slide">
       <section
         v-show="showCorrections"
-        class="hidden md:block fixed right-0 min-h-screen bg-primary w-1/3 p-4 z-20"
+        class="hidden md:block fixed right-0 min-h-screen bg-primary w-1/3 p-4"
         id="correction-list"
       >
         <!-- TODO change to and Icon button -->
@@ -43,20 +44,25 @@
           scheme="secondary"
           class="mb-3"
         />
-        <div
+        <CorrectionCard
           v-for="correction in corrections.results"
+          :correction="correction"
           :key="correction.id"
-          @click="selectCorrection(correction, 'md')"
-          class="bg-primary shadow-2xl border-2 p-4 rounded-lg cursor-pointer"
-          :class="(selectedCorrection && selectedCorrection.id == correction.id) ? 'border-white' : 'border-black'"
-        >{{ correction.title }} - by {{ correction.author.username }}</div>
+          :selected="selectedCorrection && selectedCorrection.id == correction.id"
+          @handleClick="selectCorrection(correction, 'md')"
+        />
+        <div v-if="!corrections.count">No Corrections Yet</div>
       </section>
     </transition>
   </div>
 </template>
 
 <script>
+import CorrectionCard from "~/components/correction/CorrectionCard.vue";
 export default {
+  components: {
+    CorrectionCard,
+  },
   props: {
     showCorrections: Boolean,
     corrections: Object,
