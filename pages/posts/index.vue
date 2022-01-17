@@ -28,6 +28,15 @@ export default {
     const posts = await $axios.$get(url);
     return { posts };
   },
+  beforeMount() {
+    console.log(window.innerWidth);
+    // show Filter on bigger screen
+    // 768px correspond to tailwindCss 'md' breakpoint
+    console.log(this.$store.state.showFilters);
+    if (!this.$store.state.showFilters && window.innerWidth >= 768) {
+      this.$store.commit("setShowFilters", true);
+    }
+  },
 };
 </script>
 
