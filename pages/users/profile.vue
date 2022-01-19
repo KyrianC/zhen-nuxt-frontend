@@ -35,8 +35,12 @@
             :key="name"
             :class="show == name && 'font-bold'"
           >
-            <span :class="show == name && 'bg-white'" class="w-4 h-1 inline-block mr-2"></span>
-            {{ name }}
+            <span :class="show == name && 'bg-white'" class="w-4 h-1 inline-block mr-2" />
+            Your {{ name }}
+            <span
+              v-if="name == 'Posts' && showNotification"
+              class="w-2 h-2 bg-red-400 rounded-full transform -translate-y-1"
+            />
           </li>
         </ul>
       </div>
@@ -68,6 +72,22 @@ export default {
     return {
       result: { Posts: posts, Corrections: corrections },
     };
+  },
+  computed: {
+    showNotification() {
+      return this.result.Posts.results.some(
+        (x) => x.has_new_corrections == true
+      );
+    },
+  },
+  methods: {
+    async unshowNotifcation() {
+      await this.$axios.$post(`users/unshow-notifications/`);
+      this.$auth.fetchUser();
+    },
+  },
+  created() {
+    this.unshowNotifcation();
   },
 };
 </script>

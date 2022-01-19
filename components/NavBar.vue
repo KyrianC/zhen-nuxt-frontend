@@ -14,7 +14,14 @@
       :expanded="expanded"
       :middle="true"
     />
-    <NavItem :expanded="expanded" name="Profile" link="/users/profile" icon="/user-black.svg" />
+    <div class="relative">
+      <NavItem :expanded="expanded" name="Profile" link="/users/profile" icon="/user-black.svg" />
+      <div
+        id="user-notifcation-icon"
+        v-if="$auth.loggedIn && $auth.user.show_notifications == true"
+        class="absolute bottom-8 right-4 md:top-7 md:right-0 bg-red-400 rounded-full w-3 h-3"
+      />
+    </div>
     <NavItem :expanded="expanded" name="More" link="#" icon="/more-black.svg" />
   </ul>
 </template>

@@ -120,9 +120,17 @@ export default {
       dmp.diff_cleanupSemantic(diff);
       this.diff = diff;
     },
+    async setCorrectionSeen(correction) {
+      this.$axios.$post(`posts/correction/mark-seen/${correction.id}/`);
+      correction.seen_by_author = true;
+    },
     selectCorrection(correction, screenSize) {
       this.selectedCorrection = correction;
       this.getDiff(correction);
+      if (!correction.seen_by_author) {
+        this.setCorrectionSeen(correction);
+      }
+
       if (screenSize == "sm") {
         this.showCorrections = false;
       }
