@@ -56,6 +56,9 @@ export default {
       theme: {
         maxHeight: {
           '3/4': '75%',
+          '12': '3rem',
+          '99': '30rem',
+
         },
         extend: {
           colors: {

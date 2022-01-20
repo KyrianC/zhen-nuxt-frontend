@@ -22,7 +22,7 @@
         class="absolute bottom-8 right-4 md:top-7 md:right-0 bg-red-400 rounded-full w-3 h-3"
       />
     </div>
-    <NavItem :expanded="expanded" name="More" link="#" icon="/more-black.svg" />
+    <NavItem :expanded="expanded" name="More" link="/settings" icon="/more-black.svg" />
   </ul>
 </template>
 
