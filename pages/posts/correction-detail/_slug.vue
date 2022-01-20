@@ -41,7 +41,7 @@
       </template>
     </div>
 
-    <transition v-if="$auth.loggedIn && $auth.user.pk == post.author.pk" name="fade">
+    <transition v-if="$auth.loggedIn && $auth.user.posts.includes(post.id)" name="fade">
       <button
         @click="showCorrections = true"
         v-show="!showCorrections && showButton"
