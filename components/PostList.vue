@@ -1,5 +1,5 @@
 <template>
-  <div class="bg-primary">
+  <div>
     <transition-group
       key="posts"
       name="flip-list"
@@ -12,10 +12,10 @@
         key="btn"
         class="w-full md:w-2/5 my-3 md:m-3 p-4 bg-secondaryBackground border-r-4 block"
         type="button"
-        @click="getNewPosts((loadMore = true))"
+        @click="getNewPosts(loadMore = true)"
         :disabled="!posts.next"
-        :class="!posts.next && 'cursor-not-allowed'"
-      >{{ posts.next ? "Load More" : "No More Posts..." }}</button>
+        :class="!posts.next ? 'cursor-not-allowed' : 'font-bold text-lg'"
+      >{{ !posts.next ? posts.count == 0 ? "No posts" : "No More Posts...": "Load More" }}</button>
     </transition-group>
   </div>
 </template>
@@ -26,41 +26,7 @@ export default {
   components: {
     PostCard,
   },
-  props: ["posts"],
-  methods: {
-    async getNewPosts(loadMore = false) {
-      if (this.posts.next != null && loadMore == true) {
-        const newPosts = await this.$axios.$get(this.posts.next);
-        this.posts.next = newPosts.next;
-        this.posts.results.push(...newPosts.results);
-      } else {
-        const newPosts = await this.$axios.$get(this.formatedUrl);
-        this.posts = newPosts;
-      }
-      // this.$store.commit("setPosts", this.posts);
-    },
-  },
-  computed: {
-    formatedUrl() {
-      let url = `posts/?`;
-      const filters = { ...this.$store.state.filters };
-      for (const [key, value] of Object.entries(filters)) {
-        let format = value;
-        if (Array.isArray(value)) {
-          format = format.join(",");
-        }
-        url += `&${key}=${format}`;
-      }
-      return url;
-    },
-  },
-  watch: {
-    formatedUrl: {
-      handler() {
-        this.getNewPosts();
-      },
-    },
-  },
+  props: ["posts", "getNewPosts"],
 };
 </script>
 
