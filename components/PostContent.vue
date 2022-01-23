@@ -64,13 +64,23 @@ export default {
     showCorrectionBtn() {
       // show only if is not valid correction
       // show for not logged users
-      // don't show for author or if uder already corrected the post
+      // don't show if user is author or if user is corrector
+      // don't show if language learned is same as post language and
+      // user's level is under post level
       const isValid = this.post.is_valid;
       const loggedIn = this.$auth.loggedIn;
-      const isAuthor = loggedIn && this.$auth.user.posts.includes(this.post.id);
-      const isCorrector =
-        loggedIn && this.$auth.user.corrected.includes(this.post.id);
-      return !isValid && (!loggedIn || (!isAuthor && !isCorrector));
+      if (!loggedIn) {
+        return !isValid;
+      } else {
+        const user = this.$auth.user;
+        const isAuthor = user.posts.includes(this.post.id);
+        const isCorrector = user.corrected.includes(this.post.id);
+        const hasHigherLanguageSkill =
+          user.learning_language == this.post.language
+            ? user.level > this.post.difficulty
+            : true;
+        return !isValid && !isAuthor && !isCorrector && hasHigherLanguageSkill;
+      }
     },
   },
 };
