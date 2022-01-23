@@ -1,7 +1,6 @@
 <template>
   <transition name="fade">
     <div
-      ref="background"
       @click.self="close"
       class="fixed top-0 left-0 z-50 flex bg-black bg-opacity-50 justify-center items-center overflow-hidden h-screen w-screen"
     >

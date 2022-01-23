@@ -76,7 +76,7 @@ export default {
           ...this.register,
         });
         this.$router.push({ name: "afterRegister" });
-        this.$toast.show("Just one more step...");
+        this.$toast.success("Just one more step...");
       } catch (err) {
         console.dir(err);
         this.$toast.error("An error occured, please try again");

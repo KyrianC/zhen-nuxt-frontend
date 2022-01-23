@@ -33,7 +33,7 @@
     <transition name="slide">
       <section
         v-show="showCorrections"
-        class="hidden md:block fixed right-0 min-h-screen bg-primary w-1/3 p-4"
+        class="hidden md:block fixed right-0 min-h-screen bg-primary w-1/3 p-4 rounded-md"
         id="correction-list"
       >
         <!-- TODO change to and Icon button -->

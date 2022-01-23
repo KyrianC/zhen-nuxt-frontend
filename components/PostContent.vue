@@ -1,7 +1,7 @@
 <template>
   <section id="original-post" class="w-full px-3 bg-secondaryBackground flex flex-col items-center">
     <h1
-      class="my-4 text-2xl font-bold text-center border-b-2 capitalize"
+      class="mb-4 text-2xl font-bold text-center border-b-2 capitalize"
       :class="`border-difficulty${post.difficulty}-400`"
     >{{ post.title }}</h1>
     <DeletePostModal v-if="$auth.loggedIn && $auth.user.posts.includes(post.pk)" :post="post" />
@@ -30,6 +30,7 @@
       <p>{{ post.note }}</p>
     </div>
     <Button
+      class="mt-8"
       v-if="showCorrectionBtn"
       :linkTo="`/posts/correct/${post.slug}`"
       scheme="primary"

@@ -15,7 +15,7 @@
         <i>Note: Other users won't be able to see the corrections notes</i>
       </template>
       <template v-slot:primary-btn>
-        <Button name="Select" scheme="primary" />
+        <Button name="Validate" scheme="primary" />
       </template>
       <template v-slot:secondary-btn>
         <Button name="Cancel" scheme="secondary" />
