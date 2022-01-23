@@ -18,6 +18,7 @@
       <FormInput
         type="text"
         label="Title"
+        :placeholder="`Title (in ${$auth.user.learning_language == 'zh' ? 'English' : 'Chinese'})`"
         v-model="post.title"
         :required="true"
         name="title"
@@ -26,6 +27,7 @@
       <FormInput
         label="Description"
         name="description"
+        :placeholder="`Description (in ${$auth.user.learning_language == 'zh' ? 'English' : 'Chinese'})`"
         type="text"
         v-model="post.description"
         :required="true"
@@ -34,6 +36,7 @@
       <FormInput
         label="Content"
         type="textarea"
+        :placeholder="`Text (in ${$auth.user.learning_language == 'zh' ? 'Chinese' : 'English'})`"
         v-model="post.content"
         name="content"
         :required="true"
@@ -77,7 +80,7 @@ export default {
         let response = await this.$axios.$post(this.$route.fullPath + "/", {
           ...this.post,
         });
-        this.$router.push("/posts");
+        this.$router.push(`/posts/${this.post.slug}`);
         this.$toast.success(`Successfully created "${this.post.title}"`);
         console.log(response);
       } catch (err) {

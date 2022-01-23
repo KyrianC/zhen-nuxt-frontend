@@ -31,7 +31,7 @@
         name="note"
         type="textarea"
         rows="3"
-        placeholder="Notes about the correction that can help the author improve"
+        :placeholder="notesPlaceholder"
         v-model="correction.note"
         :error="error.note"
         :required="false"
@@ -41,51 +41,39 @@
         :isCorrectionNotNeeded="isCorrectionNotNeeded"
         :error="error"
       />
-      <Button
-        v-if="isCorrectionNotNeeded"
-        @handleClick.prevent="diff"
-        name="No errors!"
-        scheme="primary"
-      />
-      <Button v-else @handleClick.prevent="diff" name="Submit" scheme="primary" />
-      <Button :linkTo="`/posts/${post.slug}`" name="Cancel" scheme="secondary" />
+      <div class="mt-4">
+        <Button
+          v-if="isCorrectionNotNeeded"
+          @handleClick.prevent="diff"
+          name="No errors!"
+          scheme="primary"
+          size="lg"
+        />
+        <Button v-else @handleClick.prevent="diff" name="Submit" scheme="primary" size="lg" />
+        <Button :linkTo="`/posts/${post.slug}`" name="Cancel" scheme="secondary" class="ml-2" />
+      </div>
     </form>
-    <transition name="fade">
-      <Modal v-show="diffResult.length" @close="diffResult = []" @confirm="postCorrect">
-        <template v-slot:header>Your Correction</template>
-        <template v-slot:body>
-          <span
-            v-for="(word, index) in diffResult"
-            :key="`${word[0]}-${index}`"
-            :class="
-              word[0] == 1
-                ? 'text-green-400 underline'
-                : word[0] == -1 && 'text-red-400 line-through'
-            "
-          >{{ word[1] }}</span>
-        </template>
-        <template v-slot:primary-btn>
-          <Button name="Submit Correction" scheme="primary" />
-        </template>
-        <template v-slot:secondary-btn>
-          <Button name="Cancel" scheme="secondary" />
-        </template>
-      </Modal>
-    </transition>
+    <SubmitCorrectionModal
+      v-show="showModal"
+      @closeModal="showModal = false"
+      :isCorrectionNotNeeded="isCorrectionNotNeeded"
+      :postCorrect="postCorrect"
+      :diffResult="diffResult"
+    />
   </div>
 </template>
 
 <script>
-import Modal from "~/components/common/Modal";
 import ScoreInput from "~/components/form/ScoreInput.vue";
 import FormInput from "~/components/form/FormInput";
 import Button from "~/components/common/Button.vue";
+import SubmitCorrectionModal from "~/components/correction/SubmitCorrectionModal.vue";
 import diffMatchPatch from "diff-match-patch";
 export default {
   components: {
     FormInput,
     ScoreInput,
-    Modal,
+    SubmitCorrectionModal,
     Button,
   },
   middleware: "auth",
@@ -107,6 +95,7 @@ export default {
         score: 10,
         score_comment: "",
       },
+      showModal: false,
       diffResult: [],
       error: {},
     };
@@ -117,6 +106,7 @@ export default {
       var diff = dmp.diff_main(this.post.content, this.correction.content);
       dmp.diff_cleanupSemantic(diff);
       this.diffResult = diff;
+      this.showModal = true;
     },
     async postCorrect() {
       try {
@@ -135,7 +125,6 @@ export default {
             score_comment: this.correction.score_comment,
           }
         );
-        console.log(res);
         this.$router.push({ name: "posts" });
         this.$toast.success(
           `Your correction has been sent to ${this.post.author.username}`
@@ -155,6 +144,14 @@ export default {
         (!this.correction.content ||
           this.correction.content == this.post.content)
       );
+    },
+    notesPlaceholder() {
+      const authorNativeLanguage =
+        this.post.author.learning_language == "zh" ? "English" : "Chinese";
+      const learningLanguage = this.post.author.get_learning_language_display;
+      const learningLevel = this.post.author.get_level_display;
+      const text = `Notes about the correction that can help the author improve (please write it in at most ${learningLevel} level ${learningLanguage} or in ${authorNativeLanguage} to help the author understand)`;
+      return text;
     },
   },
   created() {
