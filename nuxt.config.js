@@ -51,6 +51,15 @@ export default {
     "@nuxtjs/sitemap"
   ],
 
+  i18n: {
+    locales: ['en', 'zh'],
+    vueI18nLoader: true,
+    detectBrowserLanguage: {
+      fallbackLocale: 'en',
+      redirectOn: 'root',
+    },
+  },
+
   tailwindcss: {
     config: {
       theme: {
