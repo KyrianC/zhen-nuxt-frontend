@@ -44,8 +44,18 @@ export default {
 </script>
 
 <style scoped>
-/* TODO proper fade transition for logo */
 #top-bar {
   transition: backgroud-color 0.5s ease-in-out;
+}
+
+.fade-enter-active,
+.fade-leave-active {
+  transition: all 0.5s ease-in-out;
+}
+
+.fade-enter,
+.fade-leave-to {
+  position: absolute;
+  opacity: 0;
 }
 </style>
