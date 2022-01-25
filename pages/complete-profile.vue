@@ -64,10 +64,9 @@ export default {
           response.level !== "unset" &&
           response.learning_language !== "unset"
         ) {
-          console.log(response);
           // BUG this.$router.push & .replace doesn't work
           // maybe because redirect from extern page or because auth module redirect
-          this.$router.go();
+          this.$router.go("/");
           this.$toast.success("Your profile is now complete!");
         }
       } catch (err) {

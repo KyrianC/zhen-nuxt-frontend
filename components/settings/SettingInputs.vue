@@ -3,7 +3,7 @@
     <h2 class="py-4 text-xl font-bold">Settings</h2>
     <div class="px-4 divide-y-2 divide-secondaryBackground divide-opacity-50">
       <SettingBool :values="languages" label="Language" />
-      <SettingBool :values="theme" label="Theme" />
+      <!-- <SettingBool :values="theme" label="Theme" /> -->
     </div>
   </div>
 </template>

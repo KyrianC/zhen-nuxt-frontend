@@ -79,7 +79,6 @@ export default {
       ) {
         post = valid;
       }
-      console.log(post);
       return {
         post,
         corrections,

@@ -29,7 +29,7 @@
 </template>
 
 <script>
-import Modal from "~/components/Modal";
+import Modal from "~/components/common/Modal";
 import Button from "~/components/common/Button.vue";
 import PostContent from "~/components/PostContent.vue";
 export default {
@@ -46,6 +46,9 @@ export default {
       mode = "";
     } else if (to.name === "posts") {
       name = "slide-right";
+      mode = "";
+    } else {
+      name = "fade";
       mode = "";
     }
     return {
@@ -78,10 +81,13 @@ export default {
   computed: {
     canCorrectPost() {
       const loggedIn = this.$auth.loggedIn;
+      if (!loggedIn) {
+        return false;
+      }
       const level = this.$auth.user.level >= this.post.difficulty;
       const language = this.$auth.user.learning_language != this.post.language;
       const author = this.$auth.user.pk != this.post.author.pk;
-      return loggedIn && level && language && author;
+      return level && language && author;
     },
   },
 };
