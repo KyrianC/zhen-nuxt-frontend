@@ -6,14 +6,15 @@
       :class="middle && 'w-10 md:w-8'"
       :to="link"
       :exact="link == '/' ? true : false"
-      ><img :src="icon" :alt="name" /><span
+    >
+      <img :src="icon" :alt="name" />
+      <span
         class="text-xs md:text-base px-2 block transition-all duration-500"
         :class="
           `md:opacity-${expanded ? '1' : '0'} ${middle && 'hidden md:block'}`
         "
-        >{{ name }}</span
-      ></NuxtLink
-    >
+      >{{ name }}</span>
+    </NuxtLink>
   </li>
 </template>
 
@@ -24,8 +25,8 @@ export default {
     icon: String,
     middle: Boolean,
     link: String,
-    expanded: Boolean
-  }
+    expanded: Boolean,
+  },
 };
 </script>
 

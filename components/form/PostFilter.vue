@@ -4,7 +4,7 @@
       class="bg-secondaryBackground p-4 w-full mx-6 my-3 flex flex-col flex-wrap md:w-4/5 relative"
     >
       <div class="flex flex-col md:flex-row md:items-center text-sm">
-        <span class="font-bold underline">Level:</span>
+        <span class="font-bold underline">{{ $t('level') }}:</span>
         <MultipleSelect
           :choices="difficulties"
           name="difficulty"
@@ -17,7 +17,7 @@
         />
       </div>
       <div class="flex flex-col md:flex-row md:items-center text-sm">
-        <span class="font-bold underline">Language:</span>
+        <span class="font-bold underline">{{ $t('language') }}:</span>
         <MultipleSelect
           :choices="languages"
           name="language"
@@ -27,9 +27,9 @@
         />
       </div>
       <div class="flex flex-col md:flex-row md:items-center text-sm">
-        <span class="font-bold underline">Correction:</span>
+        <span class="font-bold underline">{{ $t('correction') }}:</span>
         <MultipleSelect
-          :choices="{ true: 'Corrected only' }"
+          :choices="{ true: $t('corrected_only')  }"
           name="corrected"
           @select="
           $store.commit('updateFilters', {
@@ -60,4 +60,18 @@ export default {
 };
 </script>
 
-<style></style>
+
+<i18n lang="yaml">
+  #TODO translate languages and difficulties from imported files
+  en:
+    level: "Level"
+    language: "Language"
+    correction: "Correction"
+    corrected_only: "Corrected only"
+  zh:
+    level: "水平"
+    language: "语言"
+    correction: "更正"
+    corrected_only: "仅显示更正的"
+
+</i18n>

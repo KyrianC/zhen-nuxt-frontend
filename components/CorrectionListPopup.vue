@@ -17,7 +17,12 @@
         id="correction-list"
       >
         <!-- TODO change icon or somethin else -->
-        <CommonButton @handleClick="closeCorrections" scheme="secondary" name="close" class="mb-4" />
+        <CommonButton
+          @handleClick="closeCorrections"
+          scheme="secondary"
+          :name="$t('close')"
+          class="mb-4"
+        />
         <CorrectionCard
           v-for="correction in corrections.results"
           :correction="correction"
@@ -25,7 +30,7 @@
           :selected="selectedCorrection && selectedCorrection.id == correction.id"
           @handleClick="selectCorrection(correction, 'sm')"
         />
-        <div v-if="!corrections.count">No Corrections Yet</div>
+        <div v-if="!corrections.count">{{ $t('no_correction') }}</div>
       </section>
     </transition>
 
@@ -40,7 +45,7 @@
         <CommonButton
           @handleClick="closeCorrections"
           size="xs"
-          name="hide"
+          :name="$t('hide')"
           scheme="secondary"
           class="mb-3"
         />
@@ -51,7 +56,7 @@
           :selected="selectedCorrection && selectedCorrection.id == correction.id"
           @handleClick="selectCorrection(correction, 'md')"
         />
-        <div v-if="!corrections.count">No Corrections Yet</div>
+        <div v-if="!corrections.count">{{ $t('no_correction') }}</div>
       </section>
     </transition>
   </div>
@@ -105,3 +110,14 @@ export default {
   transform: translateX(100%);
 }
 </style>
+
+<i18n lang="yaml">
+  en:
+    no_correction: "No Corrections Yet"
+    close: "Close"
+    hide: "Hide"
+  zh:
+    no_correction: "还没有纠正"
+    close: "关闭"
+    hide: "隐藏"
+</i18n>

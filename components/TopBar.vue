@@ -36,8 +36,8 @@ export default {
     showBackLink() {
       return !this.backLinkExclude.includes(this.$route.name);
     },
-    created() {
-      console.dir(this.$route, this.$router);
+    mounted() {
+      console.error(this.$route, this.$router);
     },
   },
 };

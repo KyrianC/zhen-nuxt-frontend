@@ -6,10 +6,10 @@
   >
     "{{ correction.score_comment }}": {{ correction.score }}/10
     <br />
-    by {{ correction.author.username }}
+    {{ $t('by', {author: correction.author.username}) }}
     <p class="ml-auto">
-      <span class="text-green-500" v-if="correction.is_valid">Validated</span>
-      <span class="text-red-400" v-else-if="!correction.seen_by_author">New!</span>
+      <span class="text-green-500" v-if="correction.is_valid">{{ $t('validated') }}</span>
+      <span class="text-red-400" v-else-if="!correction.seen_by_author">{{ $t('new') }}</span>
     </p>
   </div>
 </template>
@@ -24,5 +24,13 @@ export default {
 };
 </script>
 
-<style>
-</style>
+<i18n lang="yaml">
+  en:
+    validated: "Validated"
+    new: "New!"
+    by: "by {author}"
+  zh:
+    validated: "已验证"
+    new: "新的！"
+    by: "{author} 写的"
+</i18n>

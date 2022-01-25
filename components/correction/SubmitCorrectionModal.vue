@@ -1,6 +1,6 @@
 <template>
   <Modal @close="$emit('closeModal')" @confirm="postCorrect">
-    <template v-slot:header>Your Correction</template>
+    <template v-slot:header>{{ $t('header') }}</template>
     <template v-slot:body>
       <span
         v-for="(word, index) in diffResult"
@@ -14,13 +14,10 @@
       >{{ word[1] }}</span>
     </template>
     <template v-slot:primary-btn>
-      <Button
-        :name="isCorrectionNotNeeded ? '10/10 no errors' : 'Submit Correction'"
-        scheme="primary"
-      />
+      <Button :name="isCorrectionNotNeeded ? $t('no_error') : $t('submit')" scheme="primary" />
     </template>
     <template v-slot:secondary-btn>
-      <Button @handleClick="$emit('closeModal')" name="Cancel" scheme="secondary" />
+      <Button @handleClick="$emit('closeModal')" :name="$t('cancel')" scheme="secondary" />
     </template>
   </Modal>
 </template>
@@ -40,3 +37,16 @@ export default {
   },
 };
 </script>
+
+<i18n lang="yaml">
+  en:
+    header: "Your Correction"
+    no_error: "10/10 no errors"
+    submit: "Submit Correction"
+    cancel: "Cancel"
+  zh:
+    header: "您的纠正"
+    no_error: "10/10 没有任何错误"
+    submit: "提交纠正"
+    cancel: "取消"
+</i18n>

@@ -4,12 +4,12 @@
       @submit.prevent="handleSubmit"
       class="flex bg-primary p-12 rounded-md flex-col justify-center"
     >
-      <h1 class="text-3xl text-center font-bold mb-4">Edit Profile</h1>
+      <h1 class="text-3xl text-center font-bold mb-4">{{ $t('header') }}</h1>
       <p class="color-red-400" v-if="error.non_field_error">{{ error.non_field_error }}</p>
       <FormInput
         type="text"
         name="username"
-        label="Username"
+        :label="$t('username')"
         v-model="user.username"
         :defaultValue="user.username"
         :required="true"
@@ -18,7 +18,7 @@
       <FormInput
         type="email"
         name="email"
-        label="Email"
+        :label="$t('email')"
         v-model="user.email"
         :defaultValue="user.email"
         :required="true"
@@ -27,7 +27,7 @@
       <FormInput
         type="select"
         name="language"
-        label="Language Learned"
+        :label="$t('language')"
         v-model="user.language"
         :defaultValue="user.learning_language"
         :options="languages"
@@ -37,7 +37,7 @@
       <FormInput
         type="select"
         name="level"
-        label="Level in above language"
+        :label="$t('level')"
         v-model="user.level"
         :defaultValue="user.level"
         :options="difficulties"
@@ -45,8 +45,8 @@
         :error="error.level"
       />
       <div class="flex justify-evenly">
-        <Button class="mt-4" name="Confirm Edit" scheme="primary" btnType="submit" />
-        <Button linkTo="/users/profile" class="mt-4" name="Cancel" scheme="secondary" />
+        <Button class="mt-4" :name="$t('confirm')" scheme="primary" btnType="submit" />
+        <Button linkTo="/users/profile" class="mt-4" :name="$t('cancel')" scheme="secondary" />
       </div>
     </form>
   </div>
@@ -92,5 +92,21 @@ export default {
 };
 </script>
 
-<style>
-</style>
+<i18n lang="yaml">
+  en:
+    header: "Edit Profile"
+    username: "Username"
+    email: 'Email'
+    language: "Language learned"
+    level: "Level in above language"
+    confirm: "Confirm Edit"
+    cancel: "Cancel"
+  zh:
+    header: "编辑用户资料"
+    username: "用户名"
+    email: "电子邮件"
+    language: "学习的语言"
+    level: "上述语言水平"
+    confirm: "确认"
+    cancel: "取消"
+</i18n>

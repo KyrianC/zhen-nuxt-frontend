@@ -1,6 +1,6 @@
 <template>
   <NuxtLink
-    :to="`/posts/correction-detail/${post.slug}`"
+    :to="localePath(`/posts/correction-detail/${post.slug}`)"
     id="post-card"
     :class="`border-difficulty${post.difficulty}-400`"
     class="flex flex-col w-full md:w-2/5 my-3 md:m-3 p-4 bg-secondaryBackground border-r-4 block"
@@ -10,7 +10,7 @@
       <span
         v-if="showNewCorrectionsNotification"
         class="text-xs self-start text-red-400"
-      >New correction !</span>
+      >{{ $t('new_correction') }}</span>
     </div>
     <p v-if="post.language == 'en'">🇬🇧</p>
     <p v-else-if="post.language == 'zh'">🇨🇳</p>
@@ -19,12 +19,7 @@
     <div class="mt-auto">
       <span
         class="inline-block text-lg my-2 px-1 border-primary border-b-2 hover:border-primary hover:bg-primary hover:text-gray-300 transition-all"
-      >See post</span>
-      <NuxtLink
-        v-if="$auth.loggeIn && $auth.user.pk != post.text.author.pk"
-        :to="`/posts/correct/${post.slug}`"
-        class="inline-block text-lg my-2 px-1 border-primary border-b-2 hover:border-primary hover:bg-primary hover:text-gray-300 transition-all"
-      >Correct</NuxtLink>
+      >{{ $t('see_post') }}</span>
     </div>
   </NuxtLink>
 </template>
@@ -45,3 +40,12 @@ export default {
   },
 };
 </script>
+
+<i18n lang="yaml">
+  en:
+    new_correction: "New corrections !"
+    see_post: "See post"
+  zh:
+    new_correction: "新的更正！"
+    see_post: "看文章"
+</i18n>

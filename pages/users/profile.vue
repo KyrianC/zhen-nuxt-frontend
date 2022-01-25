@@ -8,17 +8,17 @@
       </div>
       <div class="flex flex-col justify-center mx-4">
         <p>
-          <span class="font-bold">Learning:</span>
+          <span class="font-bold">{{ $t('learning') }}:</span>
           <span></span>
           {{ $auth.user.get_learning_language_display }}
         </p>
         <p>
-          <span class="font-bold">Level:</span>
+          <span class="font-bold">{{ $t('level') }}:</span>
           <span :class="`text-difficulty${$auth.user.level}-400`">{{ $auth.user.get_level_display }}</span>
         </p>
         <div class="mt-4 flex justify-evenly">
-          <Button name="Edit" size="xs" scheme="primary" linkTo="/users/edit" />
-          <Button name="Delete" size="xs" scheme="danger" linkTo="#" />
+          <Button :name="$t('edit')" size="xs" scheme="primary" linkTo="/users/edit" />
+          <Button :name="$t('delete')" size="xs" scheme="danger" linkTo="#" />
         </div>
       </div>
     </section>
@@ -36,7 +36,7 @@
             :class="show == name && 'font-bold'"
           >
             <span :class="show == name && 'bg-white'" class="w-4 h-1 inline-block mr-2" />
-            Your {{ name }}
+            {{ $t('your') + name }}
             <span
               v-if="name == 'Posts' && showNotification"
               class="w-2 h-2 bg-red-400 rounded-full transform -translate-y-1"
@@ -92,5 +92,18 @@ export default {
 };
 </script>
 
-<style>
-</style>
+<i18n lang="yaml">
+  en:
+    learning: "Learning"
+    level: "Level"
+    edit: "Edit"
+    delete: "Delete"
+    your: Your
+  zh:
+    learning: "目前在学习"
+    level: "水平"
+    edit: "编辑"
+    delete: "删除"
+    your: "您的"
+
+</i18n>

@@ -3,7 +3,7 @@
     <div class="flex items-center justify-left">
       <div class="flex">
         <FormInput
-          label="Score"
+          :label="$t('score')"
           name="score"
           type="number"
           v-model="correction.score"
@@ -17,7 +17,7 @@
 
       <FormInput
         class="flex-1 ml-4"
-        label="Comment"
+        :label="$t('comment')"
         name="score_comment"
         type="text"
         v-model="correction.score_comment"
@@ -51,5 +51,11 @@ export default {
 };
 </script>
 
-<style>
-</style>
+<i18n lang="yaml">
+  en:
+    score: "Score"
+    comment: "comment"
+  zh:
+    score: "成绩"
+    comment: "评论"
+</i18n>
