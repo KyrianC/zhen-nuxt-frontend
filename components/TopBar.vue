@@ -29,12 +29,16 @@ export default {
   },
   computed: {
     background() {
-      return this.secondaryBgPages.includes(this.$route.name)
+      return this.secondaryBgPages.some(
+        (page) => this.localePath(page) == this.$route.fullPath
+      )
         ? "primary"
         : "secondaryBackground";
     },
     showBackLink() {
-      return !this.backLinkExclude.includes(this.$route.name);
+      return !this.backLinkExclude.some(
+        (page) => this.localePath(page) == this.$route.fullPath
+      );
     },
     mounted() {
       console.error(this.$route, this.$router);
