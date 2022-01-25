@@ -1,30 +1,27 @@
 <template>
-  <transition name="fade">
-    <div
-      @click="$router.go(-1)"
-      class="top-2 left-2 absolute text-lg md:left-16 cursor-pointer"
-      v-show="!backLinkExclude.includes($route.name)"
-    >back</div>
-  </transition>
+  <a class="flex items-center cursor-pointer" @click="goBack">
+    <img src="/chevron.svg" alt="go back" class="transform rotate-90 inline h-3" />
+    <span>Go back</span>
+  </a>
 </template>
 
 <script>
 export default {
-  data() {
-    return {
-      backLinkExclude: ["index", "posts", "afterRegister", "complete-profile"],
-    };
+  props: {
+    href: String,
   },
-  beforeCreate() {
-    console.log(this.$route);
+  methods: {
+    goBack() {
+      this.$router.go(-1);
+    },
   },
 };
 </script>
 
-<style>
+<style scoped>
 .fade-enter-active,
 .fade-leave-active {
-  transition: opacity 0.6s;
+  transition: opacity 0.5s;
 }
 .fade-enter,
 .fade-leave-to {

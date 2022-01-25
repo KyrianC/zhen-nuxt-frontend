@@ -56,17 +56,20 @@ export default {
       theme: {
         maxHeight: {
           '3/4': '75%',
+          '12': '3rem',
+          '99': '30rem',
+
         },
         extend: {
           colors: {
             primary: "#111F2D",
             secondary: "#BAD7F2",
             secondaryBackground: "#05121E",
-            elementary: colors.green,
-            beginner: colors.lime,
-            intermediate: colors.yellow,
-            advanced: colors.orange,
-            master: colors.red
+            difficulty1: colors.green,
+            difficulty2: colors.lime,
+            difficulty3: colors.yellow,
+            difficulty4: colors.orange,
+            difficulty5: colors.red
           }
         }
       },

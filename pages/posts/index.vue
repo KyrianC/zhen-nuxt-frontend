@@ -1,53 +1,25 @@
 <template>
-  <div class="bg-primary min-h-screen">
-    <!-- filter -->
-    <div class="flex justify-center">
-      <div class="w-full mx-6 md:mx-0 md:w-4/5 flex items-center" key="filter-btn">
-        <button>
-          <img class="w-6 md:ml-3 mt-3" src="/filter.svg" @click="$store.commit('setShowFilters')" />
-        </button>
-      </div>
-    </div>
-    <!-- need to wrap in transistion-group for posts to transition when they get pushed down when filter appear -->
-    <transition-group name="filter" mode="in-out">
-      <div class="flex justify-center mt-3 md:mx-3" key="filter" v-if="$store.state.showFilters">
-        <PostFilter
-          class="bg-secondaryBackground p-4 w-full mx-6 my-3 flex flex-col flex-wrap md:w-4/5 relative"
-        />
-      </div>
-      <transition-group
-        key="posts"
-        name="flip-list"
-        tag="div"
-        class="relative text-gray-300 flex flex-wrap mx-6 justify-center"
-      >
-        <!-- post list -->
-        <PostCard v-for="post in posts.results" :post="post" :key="post.id" />
-        <button
-          key="btn"
-          class="w-full md:w-2/5 my-3 md:m-3 p-4 bg-secondaryBackground border-r-4 block"
-          type="button"
-          @click="getNewPosts((loadMore = true))"
-          :disabled="!posts.next"
-          :class="!posts.next && 'cursor-not-allowed'"
-        >{{ posts.next ? "Load More" : "No More Posts..." }}</button>
-      </transition-group>
+  <div class="min-h-screen bg-primary">
+    <FilterIcon />
+    <transition-group tag="div" name="filter" mode="in-out">
+      <PostFilter key="filter" v-show="$store.state.showFilters" />
+      <PostList :posts="posts" key="posts" :getNewPosts="getNewPosts" />
     </transition-group>
   </div>
 </template>
 
 <script>
-import PostCard from "@/components/PostCard.vue";
 import PostFilter from "@/components/form/PostFilter";
+import PostList from "@/components/PostList";
 export default {
   components: {
-    PostCard,
     PostFilter,
+    PostList,
   },
-  async asyncData({ route, $axios, store }) {
+  async asyncData({ $axios, store }) {
     const filters = { ...store.state.filters };
-    // TODO can't use metod/computed in asyncData to format url, so need to find a way to make it cleaner and reusable
-    const url = `${route.fullPath}/?ordering=${
+    // can't use computed property formatedUrl in asyncData
+    const url = `posts/?ordering=${
       filters.ordering
     }&difficulty=${filters.difficulty.join(
       ","
@@ -67,12 +39,11 @@ export default {
         const newPosts = await this.$axios.$get(this.formatedUrl);
         this.posts = newPosts;
       }
-      // this.$store.commit("setPosts", this.posts);
     },
   },
   computed: {
     formatedUrl() {
-      let url = `${this.$route.fullPath}/?`;
+      let url = `posts/?`;
       const filters = { ...this.$store.state.filters };
       for (const [key, value] of Object.entries(filters)) {
         let format = value;
@@ -91,41 +62,13 @@ export default {
       },
     },
   },
+  beforeMount() {
+    // show Filter on bigger screen
+    // 768px correspond to tailwindCss 'md' breakpoint
+    if (!this.$store.state.showFilters && window.innerWidth >= 768) {
+      this.$store.commit("setShowFilters", true);
+    }
+  },
 };
 </script>
 
-<style>
-.flip-list-enter-active,
-.flip-list-leave-active {
-  transition: all 0.5s;
-}
-.flip-list-enter,
-.flip-list-leave-to {
-  opacity: 0;
-  transform: translateY(1rem);
-  z-index: 0;
-}
-.flip-list-move {
-  transition: transform 0.5s;
-}
-
-.flip-list-leave-active {
-  position: absolute;
-}
-
-.filter-enter-active,
-.filter-leave-active {
-  transition: transform 0.5s, opacity 0.3s;
-}
-.filter-enter,
-.filter-leave-to {
-  opacity: 0;
-  transform: translateY(-2rem);
-}
-.filter-leave-active {
-  display: none;
-}
-.filter-move {
-  transition: transform 0.5s;
-}
-</style>

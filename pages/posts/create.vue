@@ -1,12 +1,12 @@
 <template>
-  <div class="flex flex-col items-center justify-center py-4">
-    <h1 class="text-2xl font-bold">Create a Post</h1>
+  <div class="flex flex-col items-center justify-center md:py-4">
     <form
       @submit.prevent="postCreate"
       method="POST"
-      class="flex flex-col items-left justify-center"
+      class="flex flex-col items-left justify-center bg-primary p-8 md:rounded-md"
     >
-      <formInput
+      <h1 class="text-2xl text-center font-bold">Create a Post</h1>
+      <FormInput
         type="select"
         label="Difficulty"
         v-model="post.difficulty"
@@ -15,55 +15,58 @@
         :selected="post.difficulty"
         :error="error.difficulty"
       />
-      <formInput
+      <FormInput
         type="text"
         label="Title"
-        v-model="post.text.title"
+        :placeholder="`Title (in ${$auth.user.learning_language == 'zh' ? 'English' : 'Chinese'})`"
+        v-model="post.title"
         :required="true"
         name="title"
-        :error="error.text && error.text.title"
+        :error="error.title"
       />
-      <!-- ^^^ optional chaining not supported in Vue 2.x -->
-      <formInput
+      <FormInput
         label="Description"
         name="description"
+        :placeholder="`Description (in ${$auth.user.learning_language == 'zh' ? 'English' : 'Chinese'})`"
         type="text"
         v-model="post.description"
         :required="true"
         :error="error.description"
       />
-      <formInput
+      <FormInput
         label="Content"
         type="textarea"
-        v-model="post.text.original_content"
+        :placeholder="`Text (in ${$auth.user.learning_language == 'zh' ? 'Chinese' : 'English'})`"
+        v-model="post.content"
         name="content"
         :required="true"
-        :error="error.text && error.text.original_content"
+        :error="error.content"
       />
-      <button>submit</button>
+      <Button name="Submit" scheme="primary" btnType="submit" />
     </form>
   </div>
 </template>
 
 <script>
-import formInput from "@/components/form/formInput.vue";
+import FormInput from "@/components/form/FormInput.vue";
+import Button from "~/components/common/Button.vue";
 import languages from "@/static/languages";
 import difficulties from "@/static/difficulties";
 export default {
-  component: {
-    formInput,
+  components: {
+    FormInput,
+    Button,
   },
   middleware: "auth",
   data() {
     return {
       post: {
+        title: "",
+        slug: "",
         description: "",
+        content: "",
         language: this.$auth.user.learning_language,
         difficulty: this.$auth.user.level,
-        text: {
-          title: "",
-          original_content: "",
-        },
       },
       languages,
       difficulties,
@@ -77,8 +80,8 @@ export default {
         let response = await this.$axios.$post(this.$route.fullPath + "/", {
           ...this.post,
         });
-        this.$router.push("/posts");
-        this.$toast.success(`Successfully created "${this.post.text.title}"`);
+        this.$router.push(`/posts/${this.post.slug}`);
+        this.$toast.success(`Successfully created "${this.post.title}"`);
         console.log(response);
       } catch (err) {
         this.error = err.response.data;

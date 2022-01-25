@@ -6,12 +6,7 @@
     :class="expanded ? 'md:w-32' : 'md:w-14'"
   >
     <NavItem :expanded="expanded" name="Home" link="/" icon="/home-black.svg" />
-    <NavItem
-      :expanded="expanded"
-      name="Posts"
-      link="/posts"
-      icon="/post-black.svg"
-    />
+    <NavItem :expanded="expanded" name="Posts" link="/posts" icon="/post-black.svg" />
     <NavItem
       name="Add"
       link="/posts/create"
@@ -19,13 +14,15 @@
       :expanded="expanded"
       :middle="true"
     />
-    <NavItem
-      :expanded="expanded"
-      name="Profile"
-      link="/user"
-      icon="/user-black.svg"
-    />
-    <NavItem :expanded="expanded" name="More" link="#" icon="/more-black.svg" />
+    <div class="relative">
+      <NavItem :expanded="expanded" name="Profile" link="/users/profile" icon="/user-black.svg" />
+      <div
+        id="user-notifcation-icon"
+        v-if="$auth.loggedIn && $auth.user.show_notifications == true"
+        class="absolute bottom-8 right-4 md:top-7 md:right-0 bg-red-400 rounded-full w-3 h-3"
+      />
+    </div>
+    <NavItem :expanded="expanded" name="More" link="/settings" icon="/more-black.svg" />
   </ul>
 </template>
 
@@ -33,12 +30,12 @@
 import NavItem from "./NavItem.vue";
 export default {
   component: {
-    NavItem
+    NavItem,
   },
   data() {
     return {
-      expanded: false
+      expanded: false,
     };
-  }
+  },
 };
 </script>

@@ -1,7 +1,7 @@
 export default {
-  elementary: "Elementary",
-  beginner: "Beginner",
-  intermediate: "Intermediate",
-  advanced: "Advanced",
-  master: "Master"
+  1: "Elementary",
+  2: "Beginner",
+  3: "Intermediate",
+  4: "Advanced",
+  5: "Master"
 }

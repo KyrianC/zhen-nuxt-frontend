@@ -1,29 +1,29 @@
 <template>
   <div class="min-h-screen flex flex-col justify-center items-center">
-    <h1 class="text-3xl font-bold m-4">Register</h1>
-    <form @submit.prevent="userRegister">
-      <formInput
+    <form @submit.prevent="userRegister" class="bg-primary rounded-md p-8">
+      <h1 class="text-3xl font-bold mb-4 text-center">Register</h1>
+      <FormInput
         label="Username"
         type="text"
         v-model="register.username"
         :error="error.username"
         :required="true"
       />
-      <formInput
+      <FormInput
         label="Email"
         type="email"
         v-model="register.email"
         :error="error.email"
         :required="true"
       />
-      <formInput
+      <FormInput
         label="Password"
         type="password"
         v-model="register.password1"
         :error="error.password1"
         :required="true"
       />
-      <formInput
+      <FormInput
         label="Confirm Password"
         type="password"
         v-model="register.password2"
@@ -35,23 +35,25 @@
         :key="index"
         v-for="(message, index) in error.non_field_errors"
       >{{ message }}</p>
-      <button
-        class="p-2 my-4 border-2 border-secondary hover:bg-secondary hover:text-secondaryBackground transition duration-500"
-        type="submit"
-      >Submit</button>
+      <div class="flex justify-evenly">
+        <Button class="mt-4" name="Register" scheme="primary" btnType="submit" />
+        <Button linkTo="/" class="mt-4" name="Cancel" scheme="secondary" />
+      </div>
     </form>
-    <small>
+    <small class="mt-3">
       Already have an account?
-      <NuxtLink to="/login">Login Now</NuxtLink>
+      <NuxtLink class="text-secondary underline" to="/login">Login Now</NuxtLink>
     </small>
   </div>
 </template>
 
 <script>
-import formInput from "~/components/form/formInput.vue";
+import Button from "~/components/common/Button.vue";
+import FormInput from "~/components/form/FormInput.vue";
 export default {
-  component: {
-    formInput,
+  components: {
+    FormInput,
+    Button,
   },
   middleware: "auth",
   auth: "guest",
@@ -74,7 +76,7 @@ export default {
           ...this.register,
         });
         this.$router.push({ name: "afterRegister" });
-        this.$toast.show("Just one more step...");
+        this.$toast.success("Just one more step...");
       } catch (err) {
         console.dir(err);
         this.$toast.error("An error occured, please try again");

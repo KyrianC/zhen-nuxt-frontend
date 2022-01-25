@@ -1,43 +1,44 @@
 <template>
-  <form
-    class="flex flex-col justify-center items-center"
-    method="POST"
-    @submit.prevent="completeUserProfile"
-  >
-    <formInput
-      type="select"
-      v-model="userDetail.learning_language"
-      label="Language to learn"
-      name="language"
-      :options="languages"
-      :required="true"
-      :error="error.learning_language"
-    />
-    <formInput
-      type="select"
-      v-model="userDetail.level"
-      name="difficulty"
-      label="Your level of proficiency in the language above"
-      :options="difficulties"
-      :required="true"
-      :error="error.level"
-    />
-    <p
-      class="text-red-500"
-      v-for="(message, index) in error.non_field_errors"
-      :key="index"
-    >{{ message }}</p>
-    <button type="submit">submit</button>
-  </form>
+  <div class="min-h-screen flex justify-center items-center">
+    <form class="bg-primary p-12 rounded-md" method="POST" @submit.prevent="completeUserProfile">
+      <h1 class="text-3xl text-center font-bold mb-4">Complete your Profile</h1>
+      <FormInput
+        type="select"
+        v-model="userDetail.learning_language"
+        label="Language to learn"
+        name="language"
+        :options="languages"
+        :required="true"
+        :error="error.learning_language"
+      />
+      <FormInput
+        type="select"
+        v-model="userDetail.level"
+        name="difficulty"
+        label="Your level of proficiency in the language above"
+        :options="difficulties"
+        :required="true"
+        :error="error.level"
+      />
+      <p
+        class="text-red-500"
+        v-for="(message, index) in error.non_field_errors"
+        :key="index"
+      >{{ message }}</p>
+      <Button name="Submit" btnType="submit" scheme="primary" />
+    </form>
+  </div>
 </template>
 
 <script>
-import formInput from "~/components/form/formInput.vue";
+import FormInput from "~/components/form/FormInput.vue";
+import Button from "~/components/common/Button.vue";
 import difficulties from "~/static/difficulties";
 import languages from "~/static/languages";
 export default {
-  component: {
-    formInput,
+  components: {
+    FormInput,
+    Button,
   },
   middleware: "auth",
   data() {
@@ -63,10 +64,9 @@ export default {
           response.level !== "unset" &&
           response.learning_language !== "unset"
         ) {
-          console.log(response);
           // BUG this.$router.push & .replace doesn't work
           // maybe because redirect from extern page or because auth module redirect
-          this.$router.go();
+          this.$router.go("/");
           this.$toast.success("Your profile is now complete!");
         }
       } catch (err) {
@@ -86,5 +86,3 @@ export default {
   },
 };
 </script>
-
-<style></style>
