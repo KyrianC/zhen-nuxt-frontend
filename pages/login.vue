@@ -23,7 +23,7 @@
       >{{ message }}</p>
       <div class="flex justify-evenly">
         <Button class="mt-4" :name="$t('login')" scheme="primary" btnType="submit" />
-        <Button :linkTo="localePath('/')" class="mt-4" :name="$t('cancel')" scheme="secondary" />
+        <Button :linkTo="'/'" class="mt-4" :name="$t('cancel')" scheme="secondary" />
       </div>
     </form>
     <div class="mt-6">

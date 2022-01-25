@@ -1,20 +1,8 @@
 <template>
   <div class="ml-auto">
     <div v-if="!$auth.loggedIn" class="flex items-center">
-      <Button
-        :linkTo="localePath('/login')"
-        :name="$t('login')"
-        class="mx-1"
-        size="xs"
-        scheme="secondary"
-      />
-      <Button
-        :linkTo="localePath('/register')"
-        :name="$t('register')"
-        class="mx-1"
-        size="xs"
-        scheme="primary"
-      />
+      <Button :linkTo="'/login'" :name="$t('login')" class="mx-1" size="xs" scheme="secondary" />
+      <Button :linkTo="'/register'" :name="$t('register')" class="mx-1" size="xs" scheme="primary" />
     </div>
     <div v-else class="relative">
       <button @click="show = !show" class="flex items-center">

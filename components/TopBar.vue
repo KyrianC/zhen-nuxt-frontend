@@ -7,7 +7,7 @@
     <transition name="fade">
       <BackLink v-if="showBackLink" />
       <!-- TODO logo -->
-      <NuxtLink v-else to="/" class="text-xl md:text-2xl">ZHEN</NuxtLink>
+      <NuxtLink v-else :to="localePath('/')" class="text-xl md:text-2xl">ZHEN</NuxtLink>
     </transition>
     <AccountInfo />
   </div>

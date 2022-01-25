@@ -104,7 +104,7 @@ export default {
         this.$toast.success(
           `Validated Correction by ${this.selectedCorrection.author.username}`
         );
-        this.$router.push(`/posts/correction-detail/${this.post.slug}`);
+        this.$router.push(this.localePath(`/posts/correction-detail/${this.post.slug}`));
       } catch (e) {
         this.$toast.error("something went wrong.");
         console.log(e);

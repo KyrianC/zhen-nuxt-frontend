@@ -80,7 +80,7 @@ export default {
         let response = await this.$axios.$post(this.$route.fullPath + "/", {
           ...this.post,
         });
-        this.$router.push(`/posts/${this.post.slug}`);
+        this.$router.push(this.localePath(`/posts/${this.post.slug}`));
         this.$toast.success(this.$t("success", { title: this.post.title }));
         console.log(response);
       } catch (err) {

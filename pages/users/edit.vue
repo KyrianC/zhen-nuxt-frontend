@@ -79,7 +79,7 @@ export default {
         await this.$axios.$put("/auth/user/", {
           ...this.user,
         });
-        this.$router.push("/users/profile");
+        this.$router.push(this.localePath("/users/profile"));
         this.$toast.success("Successfully Edited User Infos");
         this.$auth.fetchUser();
       } catch (err) {

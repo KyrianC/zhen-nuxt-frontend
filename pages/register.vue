@@ -37,7 +37,7 @@
       >{{ message }}</p>
       <div class="flex justify-evenly">
         <Button class="mt-4" :name="$t('register')" scheme="primary" btnType="submit" />
-        <Button :linkTo="localePath('/')" class="mt-4" :name="$t('cancel')" scheme="secondary" />
+        <Button :linkTo="'/'" class="mt-4" :name="$t('cancel')" scheme="secondary" />
       </div>
     </form>
     <small class="mt-3">
@@ -75,7 +75,7 @@ export default {
         this.response = await this.$axios.$post("/auth/registration/", {
           ...this.register,
         });
-        this.$router.push(localePath("/after-register"));
+        this.$router.push(this.localePath("/after-register"));
         this.$toast.success(this.$t("success"));
       } catch (err) {
         console.dir(err);

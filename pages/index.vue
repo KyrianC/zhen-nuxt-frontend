@@ -13,13 +13,8 @@
       </transition>
       <p class="text-xl opacity-70 m-3">{{ $t('sub_title') }}</p>
       <div class="text-2xl flex flex-col md:flex-row my-3">
-        <Button
-          class="m-3"
-          :name="$t('primary_btn')"
-          scheme="primary"
-          :linkTo="localePath('posts')"
-        />
-        <Button class="m-3" :name="$t('secondary_btn')" scheme="secondary" linkTo="#about" />
+        <Button class="m-3" :name="$t('primary_btn')" scheme="primary" :linkTo="'posts'" />
+        <Button class="m-3" :name="$t('secondary_btn')" scheme="secondary" />
       </div>
     </div>
     <section class="bg-primary h-96">hello</section>

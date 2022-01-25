@@ -1,6 +1,6 @@
 <template>
   <div :class="`inline-block text-${size}`" @click="$emit('handleClick', $event)">
-    <NuxtLink v-if="linkTo" :to="linkTo">
+    <NuxtLink v-if="linkTo" :to="localePath(linkTo)">
       <button :class="scheme">{{ name }}</button>
     </NuxtLink>
     <button v-else :class="scheme">{{ name }}</button>

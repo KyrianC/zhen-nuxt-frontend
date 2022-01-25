@@ -5,21 +5,11 @@
     @mouseleave="expanded = false"
     :class="expanded ? 'md:w-32' : 'md:w-14'"
   >
-    <NavItem
-      :expanded="expanded"
-      :name="$t('home')"
-      :link="localePath('/')"
-      icon="/home-black.svg"
-    />
-    <NavItem
-      :expanded="expanded"
-      :name="$t('posts')"
-      :link="localePath('/posts')"
-      icon="/post-black.svg"
-    />
+    <NavItem :expanded="expanded" :name="$t('home')" link="/" icon="/home-black.svg" />
+    <NavItem :expanded="expanded" :name="$t('posts')" link="/posts" icon="/post-black.svg" />
     <NavItem
       :name="$t('add')"
-      :link="localePath('/posts/create')"
+      link="/posts/create"
       icon="/add-black.svg"
       :expanded="expanded"
       :middle="true"
@@ -28,7 +18,7 @@
       <NavItem
         :expanded="expanded"
         :name="$t('profile')"
-        :link="localePath('/users/profile')"
+        link="/users/profile"
         icon="/user-black.svg"
       />
       <div
@@ -37,12 +27,7 @@
         class="absolute bottom-8 right-4 md:top-7 md:right-0 bg-red-400 rounded-full w-3 h-3"
       />
     </div>
-    <NavItem
-      :expanded="expanded"
-      :name="$t('more')"
-      :link="localePath('/settings')"
-      icon="/more-black.svg"
-    />
+    <NavItem :expanded="expanded" :name="$t('more')" link="/settings" icon="/more-black.svg" />
   </ul>
 </template>
 

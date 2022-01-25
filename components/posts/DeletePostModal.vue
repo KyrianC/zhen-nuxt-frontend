@@ -40,7 +40,7 @@ export default {
     async deletePost() {
       try {
         await this.$axios.$delete(`posts/${this.$route.params.slug}/`);
-        this.$router.push({ name: "posts" });
+        this.$router.push(this.localePath("/posts"));
         this.$toast.success(this.$t("toast_success", { title: post.title }));
       } catch (err) {
         console.log(err);

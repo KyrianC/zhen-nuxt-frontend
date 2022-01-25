@@ -70,7 +70,7 @@ export default {
     async deletePost() {
       try {
         await this.$axios.$delete(`${this.$route.fullPath}/`);
-        this.$router.push({ name: "posts" });
+        this.$router.push(this.localePath("/posts"));
         this.$toast.success(`${post.title} has successfully been deleted`);
       } catch (err) {
         console.log(err);

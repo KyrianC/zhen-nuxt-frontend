@@ -32,7 +32,7 @@
     <Button
       class="mt-8"
       v-if="showCorrectionBtn"
-      :linkTo="localePath(`/posts/correct/${post.slug}`)"
+      :linkTo="`/posts/correct/${post.slug}`"
       scheme="primary"
       :name="$t('correct')"
     />

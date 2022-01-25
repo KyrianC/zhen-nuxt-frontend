@@ -4,7 +4,7 @@
       id="nav-link"
       class="w-6 md:w-8 flex flex-col md:flex-row items-center"
       :class="middle && 'w-10 md:w-8'"
-      :to="link"
+      :to="localePath(link)"
       :exact="link == '/' ? true : false"
     >
       <img :src="icon" :alt="name" />

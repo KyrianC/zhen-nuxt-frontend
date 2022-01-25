@@ -51,7 +51,7 @@
         />
         <Button v-else @handleClick.prevent="diff" :name="$t('submit')" scheme="primary" size="lg" />
         <Button
-          :linkTo="localePath('/posts/${post.slug}')"
+          :linkTo="'/posts/${post.slug}'"
           :name="$t('cancel')"
           scheme="secondary"
           class="ml-2"
@@ -130,7 +130,7 @@ export default {
             score_comment: this.correction.score_comment,
           }
         );
-        this.$router.push({ name: "posts" });
+        this.$router.push(this.localePath("/posts"));
         this.$toast.success(
           `Your correction has been sent to ${this.post.author.username}`
         );
@@ -165,7 +165,7 @@ export default {
   },
   created() {
     if (this.$auth.user.pk == this.post.author.pk) {
-      this.$router.push({ name: "posts" });
+      this.$router.push(this.localePath("/posts"));
     }
   },
 };

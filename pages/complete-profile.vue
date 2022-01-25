@@ -66,7 +66,7 @@ export default {
         ) {
           // BUG this.$router.push & .replace doesn't work
           // maybe because redirect from extern page or because auth module redirect
-          this.$router.push(localePath("/"));
+          this.$router.push(this.localePath("/"));
           this.$toast.success(this.$t("success"));
         }
       } catch (err) {
