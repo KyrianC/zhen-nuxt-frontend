@@ -1,8 +1,13 @@
 <template>
-  <div class="flex justify-center mt-3 md:mx-3">
+  <div class="flex justify-center md:mx-3">
     <div
       class="bg-secondaryBackground p-4 w-full mx-6 my-3 flex flex-col flex-wrap md:w-4/5 relative"
     >
+      <!-- TODO icon -->
+      <span
+        @click="$store.commit('setShowFilters', false)"
+        class="absolute cursor-pointer right-2 top-1 text-lg"
+      >X</span>
       <div class="flex flex-col md:flex-row md:items-center text-sm">
         <span class="font-bold underline">Level:</span>
         <MultipleSelect

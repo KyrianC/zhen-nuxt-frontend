@@ -1,5 +1,5 @@
 <template>
-  <ul class="flex flex-row flex-wrap mx-4 flex-1">
+  <ul class="grid auto-rows-auto grid-cols-2 md:grid-cols-4 lg:grid-cols-5">
     <li
       v-for="(choice, value) in choices"
       :key="value"
@@ -11,7 +11,7 @@
       "
       @click="handleSelect(value)"
     >
-      <button class="flex items-center p-1">
+      <button class="flex w-full items-center p-1 px-2">
         <svg
           aria-hidden="true"
           role="img"
@@ -32,7 +32,7 @@
             fill="currentColor"
           />
         </svg>
-        {{ choice }}
+        <span>{{ choice }}</span>
       </button>
     </li>
   </ul>

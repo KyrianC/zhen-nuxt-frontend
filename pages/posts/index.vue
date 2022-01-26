@@ -1,6 +1,6 @@
 <template>
   <div class="min-h-screen bg-primary">
-    <FilterIcon />
+    <FilterIcon v-if="!$store.state.showFilters" />
     <transition-group tag="div" name="filter" mode="in-out">
       <PostFilter key="filter" v-show="$store.state.showFilters" />
       <PostList :posts="posts" key="posts" :getNewPosts="getNewPosts" />
