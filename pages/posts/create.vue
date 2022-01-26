@@ -68,8 +68,8 @@ export default {
         language: this.$auth.user.learning_language,
         difficulty: this.$auth.user.level,
       },
-      languages,
-      difficulties,
+      languages: languages[this.$i18n.getLocaleCookie()],
+      difficulties: difficulties[this.$i18n.getLocaleCookie()],
       error: "",
     };
   },

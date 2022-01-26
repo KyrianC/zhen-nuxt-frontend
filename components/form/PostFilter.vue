@@ -53,8 +53,8 @@ export default {
   },
   data() {
     return {
-      languages,
-      difficulties,
+      languages: languages[this.$i18n.getLocaleCookie()],
+      difficulties: difficulties[this.$i18n.getLocaleCookie()],
     };
   },
 };
@@ -62,7 +62,6 @@ export default {
 
 
 <i18n lang="yaml">
-  #TODO translate languages and difficulties from imported files
   en:
     level: "Level"
     language: "Language"

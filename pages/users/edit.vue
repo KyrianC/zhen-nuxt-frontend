@@ -69,8 +69,8 @@ export default {
         level: this.$auth.user.level,
       },
       error: "",
-      languages,
-      difficulties,
+      languages: languages[this.$i18n.getLocaleCookie()],
+      difficulties: difficulties[this.$i18n.getLocaleCookie()],
     };
   },
   methods: {
