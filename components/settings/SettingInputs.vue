@@ -12,16 +12,15 @@
 import SettingBool from "~/components/settings/SettingBool.vue";
 export default {
   components: {
-    SettingBool,
+    SettingBool
   },
   data() {
     return {
-      languages: { zh: "Chinese", en: "English" },
-      theme: { dark: "Dark", light: "Light" },
+      languages: { zh: "中文", en: "English" },
+      theme: { dark: "Dark", light: "Light" }
     };
-  },
+  }
 };
 </script>
 
-<style>
-</style>
+<style></style>

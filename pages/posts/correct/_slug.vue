@@ -132,12 +132,12 @@ export default {
         );
         this.$router.push(this.localePath("/posts"));
         this.$toast.success(
-          `Your correction has been sent to ${this.post.author.username}`
+          this.$t("success", { author: this.post.author.username })
         );
       } catch (err) {
         console.log(err);
         this.error = err.response.data;
-        this.$toast.error("An error occured, please try again");
+        this.$toast.error(this.$t("error"));
         this.diffResult = [];
       }
     },
@@ -193,7 +193,7 @@ export default {
     no_error: "No errors!"
     english: "English"
     chinese: "Chinese"
-    success: "Successfully created \"{title}\""
+    success: "Your correction has been sent to {author}"
     error: "An error occured, please try again"
     submit: "Submit"
     cancel: "Cancel"
@@ -207,7 +207,7 @@ export default {
     no_error: "没有错误！"
     english: "英文"
     chinese: "中文"
-    success: "成功创建\"{title}\""
+    success: "您的更正已发送给{author}"
     error: "发生错误，请重试"
     submit: "确认"
     cancel: "取消"

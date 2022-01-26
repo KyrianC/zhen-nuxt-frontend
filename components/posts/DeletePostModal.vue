@@ -44,7 +44,7 @@ export default {
         this.$toast.success(this.$t("toast_success", { title: post.title }));
       } catch (err) {
         console.log(err);
-        this.$toast.error();
+        this.$toast.error(this.$t("error"));
       }
     },
   },
