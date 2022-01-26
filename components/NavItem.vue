@@ -2,13 +2,14 @@
   <li class="flex mx-5 md:my-8 md:mx-0">
     <NuxtLink
       id="nav-link"
-      class="w-6 md:w-8 flex flex-col md:flex-row items-center"
+      class="w-6 md:w-8 flex flex-nowrap flex-col md:flex-row items-center"
       :class="middle && 'w-10 md:w-8'"
       :to="localePath(link)"
       :exact="link == '/' ? true : false"
     >
       <img :src="icon" :alt="name" />
       <span
+        id="text"
         class="text-xs md:text-base px-2 block transition-all duration-500"
         :class="
           `md:opacity-${expanded ? '1' : '0'} ${middle && 'hidden md:block'}`
@@ -33,5 +34,8 @@ export default {
 <style>
 #nav-link.nuxt-link-active {
   font-weight: bold;
+}
+#text {
+  word-break: keep-all;
 }
 </style>

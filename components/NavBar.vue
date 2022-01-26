@@ -56,6 +56,6 @@ export default {
     home: "主页"
     posts: "文章"
     add: "添加"
-    profile: "用户资料"
+    profile: "账号"
     more: "更多"
 </i18n>

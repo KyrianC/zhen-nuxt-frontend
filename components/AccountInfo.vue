@@ -20,9 +20,15 @@
           v-show="show"
           class="absolute shadow-xl right-0 bg-primary my-2 p-4 rounded-md z-50"
         >
-          <NuxtLink :to="localePath('/users/profile')" class="block my-1 p-2">{{ $t('profile') }}</NuxtLink>
-          <NuxtLink :to="localePath('/settings')" class="block my-1 p-2">{{ $t('settings') }}</NuxtLink>
-          <button @click="logout" class="block my-1 p-2">{{ $t('logout') }}</button>
+          <NuxtLink
+            :to="localePath('/users/profile')"
+            class="popup-item block my-1 p-2"
+          >{{ $t('profile') }}</NuxtLink>
+          <NuxtLink
+            :to="localePath('/settings')"
+            class="popup-item block my-1 p-2"
+          >{{ $t('settings') }}</NuxtLink>
+          <button @click="logout" class="popup-item block my-1 p-2">{{ $t('logout') }}</button>
         </div>
       </transition>
     </div>
@@ -50,6 +56,9 @@ export default {
 </script>
 
 <style>
+.popup-item {
+  word-break: keep-all;
+}
 #account-links > *:hover {
   text-decoration: underline;
 }
@@ -75,7 +84,7 @@ export default {
     login: "Login"
     register: "Register"
   zh:
-    profile: "用户资料"
+    profile: "账号"
     settings: "设置"
     logout: "登出"
     login: "登录"
