@@ -18,7 +18,8 @@
         <div
           id="account-links"
           v-show="show"
-          class="absolute shadow-xl right-0 bg-primary my-2 p-4 rounded-md z-50"
+          class="absolute shadow-xl right-0 my-2 p-4 rounded-md z-50"
+          :class="`bg-${background ? 'secondaryBackground' : 'primary'}`"
         >
           <NuxtLink to="/users/profile" class="block my-1 p-2">Profile</NuxtLink>
           <NuxtLink to="/settings" class="block my-1 p-2">Settings</NuxtLink>
@@ -33,6 +34,9 @@
 <script>
 import Button from "~/components/common/Button.vue";
 export default {
+  props: {
+    background: Boolean,
+  },
   components: {
     Button,
   },

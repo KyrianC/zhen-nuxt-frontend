@@ -2,14 +2,14 @@
   <div
     id="top-bar"
     class="flex items-center justify-between p-2 md:pl-4 md:ml-12"
-    :class="`bg-${background}`"
+    :class="`bg-${background ? 'primary' : 'secondaryBackground'}`"
   >
     <transition name="fade">
       <BackLink v-if="showBackLink" />
       <!-- TODO logo -->
       <NuxtLink v-else to="/" class="text-xl md:text-2xl">ZHEN</NuxtLink>
     </transition>
-    <AccountInfo />
+    <AccountInfo :background="background" />
   </div>
 </template>
 
@@ -29,9 +29,7 @@ export default {
   },
   computed: {
     background() {
-      return this.secondaryBgPages.includes(this.$route.name)
-        ? "primary"
-        : "secondaryBackground";
+      return this.secondaryBgPages.includes(this.$route.name);
     },
     showBackLink() {
       return !this.backLinkExclude.includes(this.$route.name);
