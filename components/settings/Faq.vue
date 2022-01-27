@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h2 class="py-4 text-xl font-bold">FAQ</h2>
+    <h2 class="py-4 text-xl font-bold">{{ $t('faq') }}</h2>
     <div class="px-4 divide-secondaryBackground divide-y-2">
       <ExpandableItem label="Question 1">Response 1</ExpandableItem>
       <ExpandableItem label="Question 2">Response 2</ExpandableItem>
@@ -20,5 +20,9 @@ export default {
 };
 </script>
 
-<style>
-</style>
+<i18n lang="yaml">
+  en:
+    faq: "FAQ"
+  zh:
+    faq: "常问问题"
+</i18n>

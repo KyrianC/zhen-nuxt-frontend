@@ -1,9 +1,14 @@
 <template>
   <div>
-    <h2 class="py-4 text-xl font-bold">Settings</h2>
+    <h2 class="py-4 text-xl font-bold">{{ $t('settings') }}</h2>
     <div class="px-4 divide-y-2 divide-secondaryBackground divide-opacity-50">
-      <SettingBool :values="languages" label="Language" />
-      <!-- <SettingBool :values="theme" label="Theme" /> -->
+      <SettingBool
+        :choices="languages"
+        @handleChange="changeLanguage"
+        :value="$i18n.getLocaleCookie()"
+        :label="$t('language')"
+      />
+      <!-- <SettingBool :choices="theme" label="Theme" /> -->
     </div>
   </div>
 </template>
@@ -12,15 +17,28 @@
 import SettingBool from "~/components/settings/SettingBool.vue";
 export default {
   components: {
-    SettingBool
+    SettingBool,
   },
   data() {
     return {
       languages: { zh: "中文", en: "English" },
-      theme: { dark: "Dark", light: "Light" }
+      theme: { dark: "Dark", light: "Light" },
     };
-  }
+  },
+  methods: {
+    changeLanguage(value) {
+      this.$i18n.setLocale(value);
+    },
+  },
 };
 </script>
 
-<style></style>
+<i18n lang="yaml">
+  en:
+    settings: "Settings"
+    language: "Language"
+  zh:
+    settings: "设置"
+    language: "语言"
+
+</i18n>
