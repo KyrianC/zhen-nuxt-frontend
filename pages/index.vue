@@ -11,13 +11,53 @@
           :key="words[index]"
         >{{ words[index] }}</h1>
       </transition>
-      <p class="text-xl opacity-70 m-3">{{ $t('sub_title') }}</p>
+      <p class="text-xl opacity-90 m-3">{{ $t('sub_title') }}</p>
       <div class="text-2xl flex flex-col md:flex-row my-3">
         <Button class="m-3" :name="$t('primary_btn')" scheme="primary" :linkTo="'posts'" />
         <Button class="m-3" :name="$t('secondary_btn')" scheme="secondary" />
       </div>
     </div>
-    <section class="bg-primary h-96">hello</section>
+    <section id="parallax" class="w-full flex flex-col items-center justify-center h-80 bg-white">
+      <h2
+        class="text-3xl text-center p-6"
+      >Register Now to be able to Write your own text and correct others</h2>
+      <NuxtLink
+        :to="localePath('/register')"
+        class="p-2 text-lg border-2 border-white rounded-md hover:bg-white hover:text-black"
+      >Register Now</NuxtLink>
+    </section>
+    <section id="list" class="flex flex-col items-center my-12 mx-4">
+      <div class="flex flex-col md:flex-row items-center max-w-screen-md">
+        <div>
+          <h3 class="text-3xl pb-3 font-bold">Read & Write</h3>
+          <p
+            class="text-lg opacity-90"
+          >Practice your reading writing skills by writting text in foreign language and reading texts made by others</p>
+        </div>
+        <img class="md:w-80 my-4 md:my-0" src="/check.svg" alt="write image" />
+      </div>
+      <div class="flex flex-col md:flex-row-reverse items-center max-w-screen-md my-12">
+        <div class="md:ml-8">
+          <h3 class="text-3xl pb-3 font-bold">Correct & Get Corrected</h3>
+          <p
+            class="text-lg opacity-90"
+          >Get a detailed correctection by native speakers to help you improve</p>
+        </div>
+        <img class="w-80 my-4 md:my-0" src="/to-do-list.svg" alt="correct image" />
+      </div>
+      <div class="flex flex-col md:flex-row items-center max-w-screen-md">
+        <div>
+          <h3 class="text-3xl pb-3 font-bold">Translate & Help others Learn a language</h3>
+          <p
+            class="text-lg opacity-90"
+          >Translate Texts to help other learners practive their reading skills</p>
+        </div>
+        <img class="w-80 my-4 md:my-0" src="/support-team.svg" alt="translate image" />
+      </div>
+    </section>
+    <div class="w-full flex justify-center">
+      <Button scheme="primary" name="Learn More" />
+    </div>
   </div>
 </template>
 
@@ -52,6 +92,14 @@ export default {
 </script>
 
 <style scoped>
+#parallax {
+  background-image: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)),
+    url("/zhen-hero.jpeg");
+  background-attachment: fixed;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
 .fade-enter-active,
 .fade-leave-active {
   transition: opacity 0.3s;
