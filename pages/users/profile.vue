@@ -3,7 +3,7 @@
     <section id="user-info" class="p-4 flex flex-row justify-center bg-primary sticky top-0 z-20">
       <!-- TODO avatar img -->
       <div class="flex flex-col items-center mx-4">
-        <div id="user-img" class="w-20 h-20 rounded-full bg-gray-400"></div>
+        <img id="user-img" src="/avatar.jpg" class="w-20 h-20 rounded-full bg-gray-400" />
         <p class="text-lg font-bold my-2">{{ $auth.user.username }}</p>
       </div>
       <div class="flex flex-col justify-center mx-4">
