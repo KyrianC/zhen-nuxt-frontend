@@ -1,8 +1,8 @@
 <template>
   <div class="ml-auto">
     <div v-if="!$auth.loggedIn" class="flex items-center">
-      <Button linkTo="/login" name="Login" class="mx-1" size="xs" scheme="secondary" />
-      <Button linkTo="/register" name="Register" class="mx-1" size="xs" scheme="primary" />
+      <Button :linkTo="'/login'" :name="$t('login')" class="mx-1" size="xs" scheme="secondary" />
+      <Button :linkTo="'/register'" :name="$t('register')" class="mx-1" size="xs" scheme="primary" />
     </div>
     <div v-else class="relative">
       <button @click="show = !show" class="flex items-center">
@@ -21,9 +21,15 @@
           class="absolute shadow-xl right-0 my-2 p-4 rounded-md z-50"
           :class="`bg-${background ? 'secondaryBackground' : 'primary'}`"
         >
-          <NuxtLink to="/users/profile" class="block my-1 p-2">Profile</NuxtLink>
-          <NuxtLink to="/settings" class="block my-1 p-2">Settings</NuxtLink>
-          <button @click="logout" class="block my-1 p-2">Logout</button>
+          <NuxtLink
+            :to="localePath('/users/profile')"
+            class="popup-item block my-1 p-2"
+          >{{ $t('profile') }}</NuxtLink>
+          <NuxtLink
+            :to="localePath('/settings')"
+            class="popup-item block my-1 p-2"
+          >{{ $t('settings') }}</NuxtLink>
+          <button @click="logout" class="popup-item block my-1 p-2">{{ $t('logout') }}</button>
         </div>
       </transition>
     </div>
@@ -48,13 +54,15 @@ export default {
   methods: {
     async logout() {
       await this.$auth.logout();
-      this.$router.push("/login");
     },
   },
 };
 </script>
 
 <style>
+.popup-item {
+  word-break: keep-all;
+}
 #account-links > *:hover {
   text-decoration: underline;
 }
@@ -71,3 +79,19 @@ export default {
   transform: scale(30%);
 }
 </style>
+
+<i18n lang="yaml">
+  en:
+    profile: "Profile"
+    settings: "Settings"
+    logout: "Logout"
+    login: "Login"
+    register: "Register"
+  zh:
+    profile: "账号"
+    settings: "设置"
+    logout: "登出"
+    login: "登录"
+    register: "注册"
+
+</i18n>

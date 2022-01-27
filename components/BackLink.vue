@@ -1,7 +1,7 @@
 <template>
   <a class="flex items-center cursor-pointer" @click="goBack">
     <img src="/chevron.svg" alt="go back" class="transform rotate-90 inline h-3" />
-    <span>Go back</span>
+    <span>{{ $t('back') }}</span>
   </a>
 </template>
 
@@ -29,3 +29,10 @@ export default {
   /* position: absolute; */
 }
 </style>
+
+<i18n lang="yaml">
+  en:
+    back: "Go back"
+  zh:
+    back: "返回"
+</i18n>

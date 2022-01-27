@@ -1,4 +1,10 @@
 export default {
-  en: "English",
-  zh: "Chinese"
+  en: {
+    en: "English",
+    zh: "Chinese"
+  },
+  zh: {
+    en: "英文",
+    zh: "中文"
+  }
 }

@@ -5,7 +5,7 @@
       :class="`border-difficulty${post.difficulty}-400`"
     >{{ post.title }}</h1>
     <DeletePostModal v-if="$auth.loggedIn && $auth.user.posts.includes(post.pk)" :post="post" />
-    <p v-else class="italic">Written by {{ post.author.username }}</p>
+    <p v-else class="italic">{{ $t('written_by') }} {{ post.author.username }}</p>
     <p
       v-if="diff && diff.length"
       class="text-justify mx-2 my-4 text-lg text-gray-300 md:text-xl leading-8 max-w-prose whitespace-pre-line"
@@ -26,7 +26,7 @@
     >{{ post.content }}</p>
     <!-- don't show if if is valid (so is correction) or if viewed by its author -->
     <div v-if="post.note">
-      Corrector's Notes:
+      {{ $t('corrector_note') }}
       <p>{{ post.note }}</p>
     </div>
     <Button
@@ -34,7 +34,7 @@
       v-if="showCorrectionBtn"
       :linkTo="`/posts/correct/${post.slug}`"
       scheme="primary"
-      name="Correct"
+      :name="$t('correct')"
     />
   </section>
 </template>
@@ -92,3 +92,15 @@ export default {
   transition: width 0.3s ease-in-out;
 }
 </style>
+
+
+<i18n lang="yaml">
+  en:
+    written_by: "Written by"
+    corrector_note: "Corrector's Notes"
+    correct: "Correct"
+  zh:
+    corrector_note: "更正者的笔记"
+    written_by: "作者："
+    correct: "纠正"
+</i18n>

@@ -5,10 +5,10 @@
       method="POST"
       class="flex flex-col items-left justify-center bg-primary p-8 md:rounded-md"
     >
-      <h1 class="text-2xl text-center font-bold">Create a Post</h1>
+      <h1 class="text-2xl text-center font-bold">{{ $t('header') }}</h1>
       <FormInput
         type="select"
-        label="Difficulty"
+        :label="$t('difficulty')"
         v-model="post.difficulty"
         name="difficulty"
         :options="difficulties"
@@ -17,32 +17,32 @@
       />
       <FormInput
         type="text"
-        label="Title"
-        :placeholder="`Title (in ${$auth.user.learning_language == 'zh' ? 'English' : 'Chinese'})`"
+        :label="$t('title')"
+        :placeholder="$t('title_placeholder', {lang: $auth.user.learning_language == 'zh' ? $t('english') : $t('chinese')})"
         v-model="post.title"
         :required="true"
         name="title"
         :error="error.title"
       />
       <FormInput
-        label="Description"
+        :label="$t('description')"
         name="description"
-        :placeholder="`Description (in ${$auth.user.learning_language == 'zh' ? 'English' : 'Chinese'})`"
+        :placeholder="$t('description_placeholder', {lang: $auth.user.learning_language == 'zh' ? $t('english') : $t('chinese')})"
         type="text"
         v-model="post.description"
         :required="true"
         :error="error.description"
       />
       <FormInput
-        label="Content"
+        :label="$t('content')"
         type="textarea"
-        :placeholder="`Text (in ${$auth.user.learning_language == 'zh' ? 'Chinese' : 'English'})`"
+        :placeholder="$t('content_placeholder', {lang: $auth.user.learning_language == 'zh' ? $t('chinese') : $t('english')})"
         v-model="post.content"
         name="content"
         :required="true"
         :error="error.content"
       />
-      <Button name="Submit" scheme="primary" btnType="submit" />
+      <Button :name="$t('submit')" scheme="primary" btnType="submit" />
     </form>
   </div>
 </template>
@@ -68,8 +68,8 @@ export default {
         language: this.$auth.user.learning_language,
         difficulty: this.$auth.user.level,
       },
-      languages,
-      difficulties,
+      languages: languages[this.$i18n.getLocaleCookie()],
+      difficulties: difficulties[this.$i18n.getLocaleCookie()],
       error: "",
     };
   },
@@ -80,15 +80,46 @@ export default {
         let response = await this.$axios.$post(this.$route.fullPath + "/", {
           ...this.post,
         });
-        this.$router.push(`/posts/${this.post.slug}`);
-        this.$toast.success(`Successfully created "${this.post.title}"`);
+        this.$router.push(this.localePath(`/posts/${this.post.slug}`));
+        this.$toast.success(this.$t("success", { title: this.post.title }));
         console.log(response);
       } catch (err) {
         this.error = err.response.data;
-        this.$toast.error("An error occured, please try again");
+        this.$toast.error(this.$t("error"));
         console.log(err);
       }
     },
   },
 };
 </script>
+
+<i18n lang="yaml">
+  en:
+    header: "Create a Post"
+    difficulty: "Difficulty"
+    title: "Title"
+    title_placeholder: "Title (in {lang})"
+    description: "Description"
+    description_placeholder: "Description (in {lang})"
+    content: "Content"
+    content_placeholder: "Text (in {lang})"
+    english: "English"
+    chinese: "Chinese"
+    success: "Successfully created \"{title}\""
+    error: "An error occured, please try again"
+    submit: "Submit"
+  zh:
+    header: "写一段文字"
+    difficulty: "难度级别"
+    title: "标题"
+    title_placeholder: "标题 ({lang})"
+    description: "描述"
+    description_placeholder: "描述({lang})"
+    content: "文字"
+    content_placeholder: "文字 ({lang})"
+    english: "英文"
+    chinese: "中文"
+    success: "成功创建\"{title}\""
+    error: "发生错误，请重试"
+    submit: "确认"
+</i18n>

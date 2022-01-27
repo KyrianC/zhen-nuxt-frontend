@@ -15,7 +15,7 @@
         @click="getNewPosts(loadMore = true)"
         :disabled="!posts.next"
         :class="!posts.next ? 'cursor-not-allowed' : 'font-bold text-lg'"
-      >{{ !posts.next ? posts.count == 0 ? "No posts" : "No More Posts...": "Load More" }}</button>
+      >{{ !posts.next ? posts.count == 0 ? $t('no_posts') : $t('no_more_posts') : $t('load_more') }}</button>
     </transition-group>
   </div>
 </template>
@@ -65,3 +65,15 @@ export default {
   transition: transform 0.5s;
 }
 </style>
+
+
+<i18n lang="yaml">
+  en:
+    no_posts: "No posts"
+    no_more_posts: "No More posts"
+    load_more: "Load More"
+  zh:
+    no_posts: "没有文字"
+    no_more_posts: "没有更多"
+    load_more: "装载更多"
+</i18n>

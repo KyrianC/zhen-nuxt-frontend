@@ -9,7 +9,7 @@
         class="absolute cursor-pointer right-2 top-1 text-lg"
       >X</span>
       <div class="flex flex-col md:flex-row md:items-center text-sm">
-        <span class="font-bold underline">Level:</span>
+        <span class="font-bold underline">{{ $t('level') }}:</span>
         <MultipleSelect
           :choices="difficulties"
           name="difficulty"
@@ -22,7 +22,7 @@
         />
       </div>
       <div class="flex flex-col md:flex-row md:items-center text-sm">
-        <span class="font-bold underline">Language:</span>
+        <span class="font-bold underline">{{ $t('language') }}:</span>
         <MultipleSelect
           :choices="languages"
           name="language"
@@ -32,9 +32,9 @@
         />
       </div>
       <div class="flex flex-col md:flex-row md:items-center text-sm">
-        <span class="font-bold underline">Correction:</span>
+        <span class="font-bold underline">{{ $t('correction') }}:</span>
         <MultipleSelect
-          :choices="{ true: 'Corrected only' }"
+          :choices="{ true: $t('corrected_only')  }"
           name="corrected"
           @select="
           $store.commit('updateFilters', {
@@ -58,11 +58,24 @@ export default {
   },
   data() {
     return {
-      languages,
-      difficulties,
+      languages: languages[this.$i18n.getLocaleCookie()],
+      difficulties: difficulties[this.$i18n.getLocaleCookie()],
     };
   },
 };
 </script>
 
-<style></style>
+
+<i18n lang="yaml">
+  en:
+    level: "Level"
+    language: "Language"
+    correction: "Correction"
+    corrected_only: "Corrected only"
+  zh:
+    level: "水平"
+    language: "语言"
+    correction: "更正"
+    corrected_only: "仅显示更正的"
+
+</i18n>

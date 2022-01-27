@@ -7,7 +7,7 @@
     <transition name="fade">
       <BackLink v-if="showBackLink" />
       <!-- TODO logo -->
-      <NuxtLink v-else to="/" class="text-xl md:text-2xl">ZHEN</NuxtLink>
+      <NuxtLink v-else :to="localePath('/')" class="text-xl md:text-2xl">ZHEN</NuxtLink>
     </transition>
     <AccountInfo :background="background" />
   </div>
@@ -29,13 +29,15 @@ export default {
   },
   computed: {
     background() {
-      return this.secondaryBgPages.includes(this.$route.name);
+      return this.secondaryBgPages.includes(this.localePath(this.$route.name));
     },
     showBackLink() {
-      return !this.backLinkExclude.includes(this.$route.name);
+      return !this.backLinkExclude.some(
+        (page) => this.localePath(page) == this.$route.fullPath
+      );
     },
-    created() {
-      console.dir(this.$route, this.$router);
+    mounted() {
+      console.error(this.$route, this.$router);
     },
   },
 };

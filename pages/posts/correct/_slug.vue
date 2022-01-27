@@ -4,12 +4,12 @@
       class="my-4 text-2xl font-bold text-center border-b-2 capitalize"
       :class="`border-difficulty${post.difficulty}-400`"
     >
-      Correct
+      {{ $t('header') }}
       <span class="italic">"{{ post.title }}"</span>
     </h1>
     <form class="flex-grow" method="POST">
       <FormInput
-        label="Title"
+        :label="$t('title')"
         name="title"
         type="text"
         v-model="correction.title"
@@ -18,7 +18,7 @@
         :required="true"
       />
       <FormInput
-        label="Text"
+        :label="$t('content')"
         name="content"
         type="textarea"
         v-model="correction.content"
@@ -27,7 +27,7 @@
         :required="true"
       />
       <FormInput
-        label="Notes"
+        :label="$t('notes')"
         name="note"
         type="textarea"
         rows="3"
@@ -45,12 +45,17 @@
         <Button
           v-if="isCorrectionNotNeeded"
           @handleClick.prevent="diff"
-          name="No errors!"
+          :name="$t('no_error')"
           scheme="primary"
           size="lg"
         />
-        <Button v-else @handleClick.prevent="diff" name="Submit" scheme="primary" size="lg" />
-        <Button :linkTo="`/posts/${post.slug}`" name="Cancel" scheme="secondary" class="ml-2" />
+        <Button v-else @handleClick.prevent="diff" :name="$t('submit')" scheme="primary" size="lg" />
+        <Button
+          :linkTo="'/posts/${post.slug}'"
+          :name="$t('cancel')"
+          scheme="secondary"
+          class="ml-2"
+        />
       </div>
     </form>
     <SubmitCorrectionModal
@@ -125,14 +130,14 @@ export default {
             score_comment: this.correction.score_comment,
           }
         );
-        this.$router.push({ name: "posts" });
+        this.$router.push(this.localePath("/posts"));
         this.$toast.success(
-          `Your correction has been sent to ${this.post.author.username}`
+          this.$t("success", { author: this.post.author.username })
         );
       } catch (err) {
         console.log(err);
         this.error = err.response.data;
-        this.$toast.error("An error occured, please try again");
+        this.$toast.error(this.$t("error"));
         this.diffResult = [];
       }
     },
@@ -150,13 +155,17 @@ export default {
         this.post.author.learning_language == "zh" ? "English" : "Chinese";
       const learningLanguage = this.post.author.get_learning_language_display;
       const learningLevel = this.post.author.get_level_display;
-      const text = `Notes about the correction that can help the author improve (please write it in at most ${learningLevel} level ${learningLanguage} or in ${authorNativeLanguage} to help the author understand)`;
+      const text = this.$t("notes_placeholder", {
+        learningLevel,
+        learningLanguage,
+        authorNativeLanguage,
+      });
       return text;
     },
   },
   created() {
     if (this.$auth.user.pk == this.post.author.pk) {
-      this.$router.push({ name: "posts" });
+      this.$router.push(this.localePath("/posts"));
     }
   },
 };
@@ -172,3 +181,34 @@ export default {
   opacity: 0;
 }
 </style>
+
+<i18n lang="yaml">
+  en:
+    header: "Correct "
+    difficulty: "Difficulty"
+    title: "Title"
+    content: "Content"
+    notes: "Notes"
+    notes_placholder: "Notes about the correction that can help the author improve (please write it in at most {learningLevel} level {learningLanguage} or in {authorNativeLanguage} to help the author understand)"
+    no_error: "No errors!"
+    english: "English"
+    chinese: "Chinese"
+    success: "Your correction has been sent to {author}"
+    error: "An error occured, please try again"
+    submit: "Submit"
+    cancel: "Cancel"
+  zh:
+    header: "纠正"
+    difficulty: "难度级别"
+    title: "标题"
+    content: "文字"
+    notes: "改正说明"
+    notes_placeholder: "可以帮助作者提高的改正（请用{learningLevel}{learningLanguage}或者用{authorNativeLanguage}写，以帮助作者理解）"
+    no_error: "没有错误！"
+    english: "英文"
+    chinese: "中文"
+    success: "您的更正已发送给{author}"
+    error: "发生错误，请重试"
+    submit: "确认"
+    cancel: "取消"
+</i18n>

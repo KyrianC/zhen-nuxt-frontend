@@ -24,7 +24,7 @@
               <Button
                 class="mx-2"
                 scheme="secondary"
-                name="Cancel"
+                :name="$t('cancel')"
                 @handleClick="selectedCorrection = null"
               />
             </div>
@@ -46,7 +46,7 @@
         @click="showCorrections = true"
         v-show="!showCorrections && showButton"
         class="rounded-md fixed bottom-16 left-1/2 bg-secondary text-black p-2 transform -translate-x-1/2"
-      >show Corrections</button>
+      >{{ $t('show_corrections') }}</button>
     </transition>
   </div>
 </template>
@@ -104,7 +104,7 @@ export default {
         this.$toast.success(
           `Validated Correction by ${this.selectedCorrection.author.username}`
         );
-        this.$router.push(`/posts/correction-detail/${this.post.slug}`);
+        this.$router.push(this.localePath(`/posts/correction-detail/${this.post.slug}`));
       } catch (e) {
         this.$toast.error("something went wrong.");
         console.log(e);
@@ -200,3 +200,12 @@ export default {
   opacity: 0;
 }
 </style>
+
+<i18n lang="yaml">
+  en:
+    show_corrections: "show Corrections"
+    cancel: "Cancel"
+  zh:
+    show_corrections: "显示纠正"
+    cancel: "取消"
+</i18n>
