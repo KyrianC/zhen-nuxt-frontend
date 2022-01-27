@@ -29,7 +29,9 @@ export default {
   },
   computed: {
     background() {
-      return this.secondaryBgPages.includes(this.localePath(this.$route.name));
+      return this.secondaryBgPages.some(
+        (page) => this.localePath(page) == this.$route.fullPath
+      );
     },
     showBackLink() {
       return !this.backLinkExclude.some(
