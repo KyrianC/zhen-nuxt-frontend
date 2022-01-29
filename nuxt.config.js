@@ -87,6 +87,32 @@ export default {
           padding: ["hover"],
           borderWidth: ['hover'],
         }
+      },
+      purge: {
+        safeList: [
+          "bg-difficulty1-200",
+          "bg-difficulty2-200",
+          "bg-difficulty3-200",
+          "bg-difficulty4-200",
+          "bg-difficulty5-200",
+          "text-difficulty1-400",
+          "text-difficulty2-400",
+          "text-difficulty3-400",
+          "text-difficulty4-400",
+          "text-difficulty5-400",
+          "text-difficulty1-500",
+          "text-difficulty2-500",
+          "text-difficulty3-500",
+          "text-difficulty4-500",
+          "text-difficulty5-500",
+          "border-difficulty1-400",
+          "border-difficulty2-400",
+          "border-difficulty3-400",
+          "border-difficulty4-400",
+          "border-difficulty5-400",
+          "md:opacity-1",
+          "md:opacity-0",
+        ]
       }
     }
   },
