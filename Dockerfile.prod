@@ -1,0 +1,23 @@
+FROM node:16.13.2-alpine
+    MAINTAINER KyrianC <ckyrian@protonmail.com>
+
+
+RUN apk update && apk upgrade
+RUN apk add git
+
+RUN mkdir -p /home/node/zhen-web-client/node_modules && chown -R node:node /home/node/zhen-web-client/
+
+WORKDIR /home/node/zhen-web-client
+
+USER node:node
+COPY --chown=node:node package*.json ./
+RUN npm ci
+
+EXPOSE 3000
+
+ENV NUXT_HOST=0
+ENV NUXT_PORT=3000
+
+COPY --chown=node:node . ./
+
+RUN npm run build
