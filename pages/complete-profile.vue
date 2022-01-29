@@ -47,7 +47,7 @@ export default {
         username: this.$auth.user.username,
         email: this.$auth.user.email,
         learning_language: "en",
-        level: "elementary",
+        level: "1",
       },
       error: "",
       languages: languages[this.$i18n.getLocaleCookie()],

@@ -42,6 +42,8 @@
 import Button from "~/components/common/Button.vue";
 import FormInput from "~/components/form/FormInput.vue";
 export default {
+  middleware: "auth",
+  auth: "guest",
   components: {
     Button,
     FormInput,

@@ -13,7 +13,7 @@
       </transition>
       <p class="text-xl opacity-90 m-3">{{ $t('sub_title') }}</p>
       <div class="text-2xl flex flex-col md:flex-row my-3">
-        <Button class="m-3" :name="$t('primary_btn')" scheme="primary" :linkTo="'posts'" />
+        <Button class="m-3" :name="$t('primary_btn')" scheme="primary" :linkTo="'/posts'" />
         <Button class="m-3" :name="$t('secondary_btn')" scheme="secondary" />
       </div>
     </div>

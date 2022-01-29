@@ -24,8 +24,10 @@
           <NuxtLink
             :to="localePath('/users/profile')"
             class="popup-item block my-1 p-2"
+            @click="show = false"
           >{{ $t('profile') }}</NuxtLink>
           <NuxtLink
+            @click="show = false"
             :to="localePath('/settings')"
             class="popup-item block my-1 p-2"
           >{{ $t('settings') }}</NuxtLink>
@@ -54,6 +56,7 @@ export default {
   methods: {
     async logout() {
       await this.$auth.logout();
+      this.show = false;
     },
   },
 };

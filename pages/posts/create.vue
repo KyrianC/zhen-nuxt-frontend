@@ -77,7 +77,7 @@ export default {
     async postCreate() {
       console.log(this.$route);
       try {
-        let response = await this.$axios.$post(this.$route.fullPath + "/", {
+        let response = await this.$axios.$post("/posts/create/", {
           ...this.post,
         });
         this.$router.push(this.localePath(`/posts/${this.post.slug}`));
