@@ -1,6 +1,4 @@
 FROM node:16.13.2-alpine
-    MAINTAINER KyrianC <ckyrian@protonmail.com>
-
 
 RUN apk update && apk upgrade
 RUN apk add git
@@ -17,6 +15,8 @@ EXPOSE 3000
 
 ENV NUXT_HOST=0
 ENV NUXT_PORT=3000
+# nuxt can't access docker-compose env after build so we have to put it here
+ENV BASE_URL=http://api.zhen.network/api
 
 COPY --chown=node:node . ./
 
