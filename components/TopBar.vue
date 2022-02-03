@@ -24,7 +24,7 @@ export default {
   data() {
     return {
       secondaryBgPages: ["posts", "users-profile"],
-      backLinkExclude: ["index", "posts", "afterRegister", "complete-profile"],
+      backLinkExclude: ["index", "posts", "after-register", "complete-profile"],
     };
   },
   computed: {

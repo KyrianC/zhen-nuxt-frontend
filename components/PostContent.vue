@@ -6,29 +6,28 @@
     >{{ post.title }}</h1>
     <DeletePostModal v-if="$auth.loggedIn && $auth.user.posts.includes(post.pk)" :post="post" />
     <p v-else class="italic">{{ $t('written_by') }} {{ post.author.username }}</p>
-    <p
-      v-if="diff && diff.length"
-      class="text-justify mx-2 my-4 text-lg text-gray-300 md:text-xl leading-8 max-w-prose whitespace-pre-line"
-    >
-      <span
-        v-for="(word, index) in diff"
-        :key="`${word[0]}-${index}`"
-        :class="
+    <div class="mx-2 my-4 max-w-prose" v-if="diff && diff.length">
+      <p class="text-justify mb-8 text-lg text-gray-300 md:text-xl leading-8whitespace-pre-line">
+        <span
+          v-for="(word, index) in diff"
+          :key="`${word[0]}-${index}`"
+          :class="
               word[0] == 1
                 ? 'text-green-400 underline'
                 : word[0] == -1 && 'text-red-400 line-through'
             "
-      >{{ word[1] }}</span>
-    </p>
+        >{{ word[1] }}</span>
+      </p>
+      <div class="bg-primary p-3">
+        <h2 class="text-xl font-bold mb-2">{{ $t('corrector_note') }}:</h2>
+        <p class="text-justify leading-7">{{ post.note }}</p>
+      </div>
+    </div>
     <p
       v-else
       class="text-justify mx-2 my-4 text-lg text-gray-300 md:text-xl leading-8 max-w-prose whitespace-pre-line"
     >{{ post.content }}</p>
     <!-- don't show if if is valid (so is correction) or if viewed by its author -->
-    <div v-if="post.note">
-      {{ $t('corrector_note') }}
-      <p>{{ post.note }}</p>
-    </div>
     <Button
       class="mt-8"
       v-if="showCorrectionBtn"

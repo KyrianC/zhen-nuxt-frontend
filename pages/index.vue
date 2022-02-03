@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div id="home">
     <div
       class="h-screen py-4 flex justify-center items-center flex-col text-center text-opacity-100 bg-secondaryBackground"
     >
@@ -14,8 +14,13 @@
       <p class="text-xl opacity-90 m-3">{{ $t('sub_title') }}</p>
       <div class="text-2xl flex flex-col md:flex-row my-3">
         <Button class="m-3" :name="$t('primary_btn')" scheme="primary" :linkTo="'/posts'" />
-        <Button class="m-3" :name="$t('secondary_btn')" scheme="secondary" />
+        <a href="#parallax">
+          <Button class="m-3" :name="$t('secondary_btn')" scheme="secondary" />
+        </a>
       </div>
+      <a href="#parallax" id="see-more-icon" class="h-20 absolute bottom-0">
+        <img src="/chevron.svg" alt="read more" />
+      </a>
     </div>
     <section id="parallax" class="w-full flex flex-col items-center justify-center h-80 bg-white">
       <h2
@@ -92,6 +97,12 @@ export default {
 </script>
 
 <style scoped>
+#see-more-icon {
+  animation-name: up-down;
+  animation-duration: 1s;
+  animation-iteration-count: infinite;
+  animation-direction: alternate-reverse;
+}
 #parallax {
   background-image: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)),
     url("/zhen-hero.jpeg");
@@ -108,6 +119,15 @@ export default {
 .fade-leave-to {
   opacity: 0;
   /* position: absolute; */
+}
+
+@keyframes up-down {
+  from {
+    transform: translateY(0%);
+  }
+  to {
+    transform: translateY(-20%);
+  }
 }
 </style>
 
