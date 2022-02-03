@@ -11,12 +11,12 @@
             v-if="selectedCorrection"
             :class="showCorrections && 'md:w-2/3 md:pr-8'"
           >
-            <!-- TODO icon + better placement -->
-            <span
-              class="absolute left-5 top-4 text-2xl cursor-pointer"
+            <img
+              src="/close.svg"
+              class="absolute h-5 left-4 top-4 cursor-pointer"
               title="close"
               @click="selectedCorrection = null"
-            >x</span>
+            />
             <PostContent key="correction" :diff="diff" :post="selectedCorrection" />
             <div class="flex p-4 bg-secondaryBackground justify-center">
               <ValidateCorrectionModal :correction="selectedCorrection" />
@@ -104,7 +104,9 @@ export default {
         this.$toast.success(
           `Validated Correction by ${this.selectedCorrection.author.username}`
         );
-        this.$router.push(this.localePath(`/posts/correction-detail/${this.post.slug}`));
+        this.$router.push(
+          this.localePath(`/posts/correction-detail/${this.post.slug}`)
+        );
       } catch (e) {
         this.$toast.error("something went wrong.");
         console.log(e);

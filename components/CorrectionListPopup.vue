@@ -16,7 +16,6 @@
         v-show="showCorrections"
         id="correction-list"
       >
-        <!-- TODO change icon or somethin else -->
         <CommonButton
           @handleClick="closeCorrections"
           scheme="secondary"
@@ -41,7 +40,6 @@
         class="hidden md:block fixed right-0 min-h-screen bg-primary w-1/3 p-4 rounded-md"
         id="correction-list"
       >
-        <!-- TODO change to and Icon button -->
         <CommonButton
           @handleClick="closeCorrections"
           size="xs"

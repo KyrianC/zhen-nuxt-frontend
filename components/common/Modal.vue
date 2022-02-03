@@ -8,8 +8,11 @@
         id="children"
         class="relative flex w-content items-center flex-col bg-primary p-8 max-h-3/4"
       >
-        <!-- TODO icon -->
-        <span @click="close" class="ml-auto block cursor-pointer absolute top-0 right-2 text-xl">x</span>
+        <img
+          src="/close.svg"
+          @click="close"
+          class="ml-auto h-5 cursor-pointer absolute top-2 right-2"
+        />
         <h3 class="text-center text-xl font-bold">
           <slot name="header">Info</slot>
         </h3>

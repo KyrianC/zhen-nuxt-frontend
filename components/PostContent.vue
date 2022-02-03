@@ -7,7 +7,7 @@
     <DeletePostModal v-if="$auth.loggedIn && $auth.user.posts.includes(post.pk)" :post="post" />
     <p v-else class="italic">{{ $t('written_by') }} {{ post.author.username }}</p>
     <div class="mx-2 my-4 max-w-prose" v-if="diff && diff.length">
-      <p class="text-justify mb-8 text-lg text-gray-300 md:text-xl leading-8whitespace-pre-line">
+      <p class="text-justify mb-8 text-lg text-gray-300 md:text-xl leading-8 whitespace-pre-line">
         <span
           v-for="(word, index) in diff"
           :key="`${word[0]}-${index}`"
@@ -23,10 +23,11 @@
         <p class="text-justify leading-7">{{ post.note }}</p>
       </div>
     </div>
-    <p
-      v-else
-      class="text-justify mx-2 my-4 text-lg text-gray-300 md:text-xl leading-8 max-w-prose whitespace-pre-line"
-    >{{ post.content }}</p>
+    <div v-else class="mx-2 my-4 max-w-prose">
+      <p
+        class="text-justify text-lg text-gray-300 md:text-xl leading-8 max-w-prose whitespace-pre-line"
+      >{{ post.content }}</p>
+    </div>
     <!-- don't show if if is valid (so is correction) or if viewed by its author -->
     <Button
       class="mt-8"

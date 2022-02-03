@@ -82,6 +82,7 @@ export default {
         });
         this.$router.push(this.localePath(`/posts/${this.post.slug}`));
         this.$toast.success(this.$t("success", { title: this.post.title }));
+        this.$auth.fetchUser();
         console.log(response);
       } catch (err) {
         this.error = err.response.data;
