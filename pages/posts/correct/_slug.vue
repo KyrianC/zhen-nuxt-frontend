@@ -152,7 +152,9 @@ export default {
     },
     notesPlaceholder() {
       const authorNativeLanguage =
-        this.post.author.learning_language == "zh" ? "English" : "Chinese";
+        this.post.author.learning_language == "zh"
+          ? this.$t("english")
+          : this.$t("chinese");
       const learningLanguage = this.post.author.get_learning_language_display;
       const learningLevel = this.post.author.get_level_display;
       const text = this.$t("notes_placeholder", {
